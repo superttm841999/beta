@@ -5,56 +5,70 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.beta.R
+import com.example.beta.data.CartViewModel
+import com.example.beta.databinding.FragmentPaymentBinding
+import com.example.beta.util.PaymentAdapter
+import java.text.DecimalFormat
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PaymentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PaymentFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var binding: FragmentPaymentBinding
+    private val total by lazy { requireArguments().getDouble("id") ?: 0.0 }
+    private val shop by lazy { requireArguments().getString("shop") ?: ""}
+    private val deliveryVoucher by lazy { requireArguments().getString("delivery_voucher") ?: ""}
+    private val foodVoucher by lazy { requireArguments().getString("food_voucher") ?: ""}
+    private val vm: CartViewModel by activityViewModels()
+    private val formatter = DecimalFormat("0.00")
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        binding = FragmentPaymentBinding.inflate(inflater,container,false)
+
+        val adapter = PaymentAdapter()
+        binding.rv.adapter = adapter
+
+        vm.getShop(shop).observe(viewLifecycleOwner){carts ->
+            adapter.submitList(carts)
         }
+
+
+
+        binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
+
+        //val range = (1..5).shuffled().last()
+        val range = 5
+        var deliveryFee = range
+        if(deliveryVoucher == "None"){
+            //deliveryFee = deliveryFee
+        }else if(deliveryVoucher == "Free Delivery"){
+            deliveryFee = 0
+        }else if(deliveryVoucher == "Free RM 1" && deliveryFee >= 1){
+            deliveryFee -= 1
+        }
+        var foodDiscount = 0
+        if(foodVoucher == "None"){
+
+        }else if(foodVoucher == "RM 5"){
+            foodDiscount = 5
+        }else if(foodVoucher == "RM 10"){
+            foodDiscount = 10
+        }
+
+        binding.txtSubTotal.text = "RM " + formatter.format(total-foodDiscount)
+        binding.txtDeliveryVoucher.text = deliveryVoucher
+        binding.txtFoodVoucher.text = foodVoucher
+
+        binding.txtDeliveryFee.text = "RM $deliveryFee"
+
+        var totalPaid = (total - foodDiscount + deliveryFee) + ((total - foodDiscount + deliveryFee) * 0.06)
+        binding.txtTotal.text ="RM " + formatter.format(totalPaid)
+
+        return binding.root
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_payment, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PaymentFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PaymentFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

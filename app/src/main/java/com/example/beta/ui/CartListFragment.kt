@@ -84,8 +84,7 @@ class CartListFragment : Fragment() {
                     nav.navigate(R.id.paymentFragment,
                         bundleOf("id" to total,
                             "shop" to binding.spnShop.selectedItem.toString(),
-                            "delivery_voucher" to binding.spnDeliveryVoucher.selectedItem.toString(),
-                            "food_voucher" to binding.spnFoodVoucher.selectedItem.toString()
+
                         )
                     )
                 }
