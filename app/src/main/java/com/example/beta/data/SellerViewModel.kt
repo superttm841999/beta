@@ -81,11 +81,11 @@ class SellerViewModel : ViewModel() {
         e += if (f.logo.toBytes().isEmpty()) "- Photo is required.\n"
         else ""
 
-        e += if (f.category == "--SELECT--") "- Category is required. \n"
+        e += if (f.category == "--SELECT--") "- Type is required. \n"
         else ""
 
         e += if (f.address == "") "- Address is required.\n"
-        else if (f.address.length < 10) "- Name is too short.\n"
+        else if (f.address.length < 10) "- Address is too short.\n"
         else ""
 
         return e

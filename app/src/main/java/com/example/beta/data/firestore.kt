@@ -3,6 +3,8 @@ package com.example.beta.data
 import com.google.firebase.firestore.Blob
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.Exclude
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 data class Count(
@@ -37,3 +39,20 @@ data class Seller(
 
     override fun toString() = name
 }
+
+data class Food(
+    @DocumentId
+    var id: String = "",
+    var name: String = "",
+    var price: Double = 0.00,
+    var description: String = "",
+    var image : Blob = Blob.fromBytes(ByteArray(0)),
+    var status : String = "",
+    var applicationId: String = "",
+) {
+    @get:Exclude
+    var application: Seller = Seller()
+}
+
+val APPLICATION_FORM = Firebase.firestore.collection("Seller")
+val FOODS = Firebase.firestore.collection("Food")

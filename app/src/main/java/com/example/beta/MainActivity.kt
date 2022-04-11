@@ -1,35 +1,50 @@
 package com.example.beta
 
+import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.beta.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val nav by lazy { supportFragmentManager.findFragmentById(R.id.host)!!.findNavController() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setupActionBarWithNavController(nav)
+    }
 
-        val navView: BottomNavigationView = binding.navView
+    override fun onSupportNavigateUp(): Boolean {
+        return nav.navigateUp() || super.onSupportNavigateUp()
+    }
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_account
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+    @RequiresApi(Build.VERSION_CODES.P)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // TODO: Enable menu group divider
+        menu?.setGroupDividerEnabled(true)
+
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // TODO: Only handle main menu group and home
+        if(item.groupId != R.id.main && item.itemId != R.id.homeFragment) return false
+
+        //clear backstack
+        return item.onNavDestinationSelected(nav) || super.onOptionsItemSelected(item)
     }
 }
