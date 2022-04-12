@@ -5,4 +5,19 @@
     <string name="title_notifications">Notifications</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="blank_username">Please enter username. It is required</string>
+    <string name="blank_name">Please enter name. It is required</string>
+    <string name="blank_email">Please enter email. It is required</string>
+    <string name="blank_gender">Please choose gender. It is required</string>
+    <string name="blank_phone">Please enter phone number. It is required</string>
+    <string name="blank_password">Please enter password. It is required</string>
+    <string name="duplicated_username">Please enter another username. It is duplicated</string>
+    <string name="invalid_email">Please enter valid email. Eg. demoemail@gmail.com</string>
+    <string name="invalid_phone">Please enter valid phone number. E.g: (+60)1155727088</string>
+    <string name="blocked_user">The account has been blocked</string>
+    <string name="pending_user">The account is in the pending stage</string>
+    <string name="active_user">Login Successfully</string>
 </resources>
