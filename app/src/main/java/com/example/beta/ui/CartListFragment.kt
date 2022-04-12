@@ -1,5 +1,6 @@
 package com.example.beta.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -85,34 +86,45 @@ class CartListFragment : Fragment() {
 
                 val vvv = vc.get(binding.edtVoucher.text.toString())
                 val err = vvv?.let { it1 -> vc.validate(it1) }
-                if(err != ""){
-                    if(binding.edtVoucher.text.toString() !=null){
-                        if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
-                            nav.navigate(R.id.paymentFragment,
-                                bundleOf("id" to total,
-                                    "shop" to binding.spnShop.selectedItem.toString(),
-                                    "voucher" to vvv?.value,
-                                    "voucher name" to vvv?.name,
-                                )
-                            )
-                        }
-                    }else{
-                        if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
+                Log.d("voucher",vvv?.value.toString())
+
+                    if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
+                        if(binding.edtVoucher.text.toString().isEmpty()){
                             nav.navigate(R.id.paymentFragment,
                                 bundleOf("id" to total,
                                     "shop" to binding.spnShop.selectedItem.toString(),
                                     "voucher" to 0,
-                                    "voucher name" to "",
+                                    "voucher name" to "No Voucher",
                                 )
                             )
+                        }else{
+                            if(err == true && vvv.status == 1){
+                                    nav.navigate(R.id.paymentFragment,
+                                        bundleOf("id" to total,
+                                            "shop" to binding.spnShop.selectedItem.toString(),
+                                            "voucher" to vvv?.value,
+                                            "voucher name" to vvv?.name,
+                                        )
+                                    )
+                            }else{
+                                AlertDialog.Builder(context)
+                                    .setIcon(R.drawable.ic_error)
+                                    .setTitle("Error")
+                                    .setMessage("Code is no found")
+                                    .setPositiveButton("Dismiss", null)
+                                    .show()
+                                return@observe
+                            }
                         }
+                    }else{
+                        AlertDialog.Builder(context)
+                            .setIcon(R.drawable.ic_error)
+                            .setTitle("Error")
+                            .setMessage("Please select the shop")
+                            .setPositiveButton("Dismiss", null)
+                            .show()
+                        return@observe
                     }
-
-                }else{
-                    err?.let { it1 -> errorDialog(it1) }
-                    return@observe
-                }
-
 
 //                binding.txtCount.text = formatter.format(total)
                 Log.d("lol",total.toString())

@@ -59,7 +59,7 @@ data class Voucher(
     var docId : String = "",
     var name : String = "",
     var code : String = "",
-    var value : Double = 0.0,
+    var value : Int = 0,
     //Invalid -0  Valid -1
     var status : Int = 0,
 )

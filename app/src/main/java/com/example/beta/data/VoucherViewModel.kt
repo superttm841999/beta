@@ -25,15 +25,14 @@ class VoucherViewModel : ViewModel() {
     fun getAll() = forms
 
     private fun codeExists(code: String): Boolean {
-        return forms.value?.any{ f -> f.code == code} ?: true
+        if(forms.value?.any{ f -> f.code == code} == true){
+            return true
+        }
+        return false
     }
 
-    fun validate(f: Voucher, insert: Boolean = false): String {
-        var e = ""
+    fun validate(f: Voucher): Boolean {
+        return codeExists(f.code)
 
-            e += if (codeExists(f.code)) "- Code is no found.\n"
-            else ""
-
-        return e
     }
 }

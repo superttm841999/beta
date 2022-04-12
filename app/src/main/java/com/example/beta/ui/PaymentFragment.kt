@@ -1,6 +1,7 @@
 package com.example.beta.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,7 @@ class PaymentFragment : Fragment() {
     private lateinit var binding: FragmentPaymentBinding
     private val total by lazy { requireArguments().getDouble("id") ?: 0.0 }
     private val shop by lazy { requireArguments().getString("shop") ?: ""}
-    private val voucher by lazy { requireArguments().getString("voucher") ?: ""}
+    private val voucher by lazy { requireArguments().getInt("voucher") ?: 0}
     private val voucherName by lazy { requireArguments().getString("voucher name") ?: ""}
     private val vm: CartViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
@@ -44,9 +45,9 @@ class PaymentFragment : Fragment() {
         val range = 5
         var deliveryFee = range
 
-        var foodDiscount = voucher.toInt()
+        var foodDiscount = voucher
 
-
+        Log.d("voucher",voucher.toString())
         binding.txtSubTotal.text = "RM " + formatter.format(total-foodDiscount)
 
         binding.txtVoucher.text = voucherName
