@@ -62,6 +62,8 @@ data class Voucher(
     var value : Int = 0,
     //Invalid -0  Valid -1
     var status : Int = 0,
+    var startDate : String = "",
+    var endDate : String = "",
 )
 
 val APPLICATION_FORM = Firebase.firestore.collection("Seller")

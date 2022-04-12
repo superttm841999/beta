@@ -20,6 +20,9 @@ import com.example.beta.databinding.FragmentCartListBinding
 import com.example.beta.util.CartAdapter
 import com.example.beta.util.errorDialog
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CartListFragment : Fragment() {
@@ -29,7 +32,9 @@ class CartListFragment : Fragment() {
     private val vm: CartViewModel by activityViewModels()
     private val vc: VoucherViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
+    private val date = Date()
 
+    private val format = SimpleDateFormat("yyyyMMdd")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCartListBinding.inflate(inflater, container, false)
 
@@ -77,19 +82,21 @@ class CartListFragment : Fragment() {
         }
         binding.btnDeleteAll.setOnClickListener { vm.deleteAll() }
 
+
         var total = 0.00
+
         binding.btnPay.setOnClickListener {
             vm.getShop(binding.spnShop.selectedItem.toString()).observe(viewLifecycleOwner){carts ->
-                for(c in carts){
-                    total += (c.price * c.count)
-                }
+
 
                 val vvv = vc.get(binding.edtVoucher.text.toString())
                 val err = vvv?.let { it1 -> vc.validate(it1) }
-                Log.d("voucher",vvv?.value.toString())
 
                     if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
                         if(binding.edtVoucher.text.toString().isEmpty()){
+                            for(c in carts){
+                                total += (c.price * c.count)
+                            }
                             nav.navigate(R.id.paymentFragment,
                                 bundleOf("id" to total,
                                     "shop" to binding.spnShop.selectedItem.toString(),
@@ -98,23 +105,45 @@ class CartListFragment : Fragment() {
                                 )
                             )
                         }else{
-                            if(err == true && vvv.status == 1){
-                                    nav.navigate(R.id.paymentFragment,
-                                        bundleOf("id" to total,
-                                            "shop" to binding.spnShop.selectedItem.toString(),
-                                            "voucher" to vvv?.value,
-                                            "voucher name" to vvv?.name,
-                                        )
-                                    )
-                            }else{
-                                AlertDialog.Builder(context)
-                                    .setIcon(R.drawable.ic_error)
-                                    .setTitle("Error")
-                                    .setMessage("Code is no found")
-                                    .setPositiveButton("Dismiss", null)
-                                    .show()
-                                return@observe
-                            }
+                            val cmp = vvv?.startDate?.compareTo(format.format(date).toString()) //-1
+                            val cmpEnd = vvv?.endDate?.compareTo(format.format(date).toString()) //-1
+                            Log.d("check",format.format(date).toString())
+
+                            Log.d("check",cmp.toString())
+                            Log.d("checks",cmpEnd.toString())
+                                if(err == true && vvv.status == 1 ){
+                                    if (cmp != null && cmpEnd !=null) {
+                                        if(cmp >= 0 && cmpEnd <= 0){
+                                            for(c in carts){
+                                                total += (c.price * c.count)
+                                            }
+                                            nav.navigate(R.id.paymentFragment,
+                                                bundleOf("id" to total,
+                                                    "shop" to binding.spnShop.selectedItem.toString(),
+                                                    "voucher" to vvv?.value,
+                                                    "voucher name" to vvv?.name,
+                                                )
+                                            )
+                                        }else{
+                                            AlertDialog.Builder(context)
+                                                .setIcon(R.drawable.ic_error)
+                                                .setTitle("Error")
+                                                .setMessage("Code is expired")
+                                                .setPositiveButton("Dismiss", null)
+                                                .show()
+                                            return@observe
+                                        }
+
+                                    }
+                                }else{
+                                    AlertDialog.Builder(context)
+                                        .setIcon(R.drawable.ic_error)
+                                        .setTitle("Error")
+                                        .setMessage("Code is no found")
+                                        .setPositiveButton("Dismiss", null)
+                                        .show()
+                                    return@observe
+                                }
                         }
                     }else{
                         AlertDialog.Builder(context)
