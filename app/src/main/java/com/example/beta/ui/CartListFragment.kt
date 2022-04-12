@@ -14,8 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.beta.R
 import com.example.beta.data.CartViewModel
+import com.example.beta.data.VoucherViewModel
 import com.example.beta.databinding.FragmentCartListBinding
 import com.example.beta.util.CartAdapter
+import com.example.beta.util.errorDialog
 import java.text.DecimalFormat
 
 
@@ -24,6 +26,7 @@ class CartListFragment : Fragment() {
     private lateinit var binding:FragmentCartListBinding
     private val nav by lazy { findNavController() }
     private val vm: CartViewModel by activityViewModels()
+    private val vc: VoucherViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,14 +83,36 @@ class CartListFragment : Fragment() {
                     total += (c.price * c.count)
                 }
 
-                if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
-                    nav.navigate(R.id.paymentFragment,
-                        bundleOf("id" to total,
-                            "shop" to binding.spnShop.selectedItem.toString(),
+                val vvv = vc.get(binding.edtVoucher.text.toString())
+                val err = vvv?.let { it1 -> vc.validate(it1) }
+                if(err != ""){
+                    if(binding.edtVoucher.text.toString() !=null){
+                        if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
+                            nav.navigate(R.id.paymentFragment,
+                                bundleOf("id" to total,
+                                    "shop" to binding.spnShop.selectedItem.toString(),
+                                    "voucher" to vvv?.value,
+                                    "voucher name" to vvv?.name,
+                                )
+                            )
+                        }
+                    }else{
+                        if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
+                            nav.navigate(R.id.paymentFragment,
+                                bundleOf("id" to total,
+                                    "shop" to binding.spnShop.selectedItem.toString(),
+                                    "voucher" to 0,
+                                    "voucher name" to "",
+                                )
+                            )
+                        }
+                    }
 
-                        )
-                    )
+                }else{
+                    err?.let { it1 -> errorDialog(it1) }
+                    return@observe
                 }
+
 
 //                binding.txtCount.text = formatter.format(total)
                 Log.d("lol",total.toString())

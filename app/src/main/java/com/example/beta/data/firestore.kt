@@ -54,5 +54,15 @@ data class Food(
     var application: Seller = Seller()
 }
 
+data class Voucher(
+    @DocumentId
+    var docId : String = "",
+    var name : String = "",
+    var code : String = "",
+    var value : Double = 0.0,
+    //Invalid -0  Valid -1
+    var status : Int = 0,
+)
+
 val APPLICATION_FORM = Firebase.firestore.collection("Seller")
 val FOODS = Firebase.firestore.collection("Food")

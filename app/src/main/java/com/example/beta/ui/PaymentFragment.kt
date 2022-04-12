@@ -19,8 +19,8 @@ class PaymentFragment : Fragment() {
     private lateinit var binding: FragmentPaymentBinding
     private val total by lazy { requireArguments().getDouble("id") ?: 0.0 }
     private val shop by lazy { requireArguments().getString("shop") ?: ""}
-    private val deliveryVoucher by lazy { requireArguments().getString("delivery_voucher") ?: ""}
-    private val foodVoucher by lazy { requireArguments().getString("food_voucher") ?: ""}
+    private val voucher by lazy { requireArguments().getString("voucher") ?: ""}
+    private val voucherName by lazy { requireArguments().getString("voucher name") ?: ""}
     private val vm: CartViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
 
@@ -43,25 +43,13 @@ class PaymentFragment : Fragment() {
         //val range = (1..5).shuffled().last()
         val range = 5
         var deliveryFee = range
-        if(deliveryVoucher == "None"){
-            //deliveryFee = deliveryFee
-        }else if(deliveryVoucher == "Free Delivery"){
-            deliveryFee = 0
-        }else if(deliveryVoucher == "Free RM 1" && deliveryFee >= 1){
-            deliveryFee -= 1
-        }
-        var foodDiscount = 0
-        if(foodVoucher == "None"){
 
-        }else if(foodVoucher == "RM 5"){
-            foodDiscount = 5
-        }else if(foodVoucher == "RM 10"){
-            foodDiscount = 10
-        }
+        var foodDiscount = voucher.toInt()
+
 
         binding.txtSubTotal.text = "RM " + formatter.format(total-foodDiscount)
-        binding.txtDeliveryVoucher.text = deliveryVoucher
-        binding.txtFoodVoucher.text = foodVoucher
+
+        binding.txtVoucher.text = voucherName
 
         binding.txtDeliveryFee.text = "RM $deliveryFee"
 
