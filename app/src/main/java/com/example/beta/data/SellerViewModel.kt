@@ -54,8 +54,9 @@ class SellerViewModel : ViewModel() {
     }
 
     //Read COUNT
-    fun getCount(docId: String): Count? {
-        return counts.value?.find{ f -> f.docId == docId }
+    suspend fun getCount(docId: String): Int? {
+        val result = countCol.document(docId).get().await()
+        return result.data?.get("count").toString().toIntOrNull()
     }
 
     //Update COUNT
@@ -70,6 +71,7 @@ class SellerViewModel : ViewModel() {
             e += if (f.docId == "") "- Id is required.\n"
             //else if (!f.id.matches(regexId)) "- Id format is invalid.\n"
             else if (idExists(f.docId)) "- Id is duplicated.\n"
+            else if (f.docId == "1001") "- Please submit again if only Id got problem.\n"
             else ""
         }
 

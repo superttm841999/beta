@@ -20,7 +20,7 @@ class FoodViewModel : ViewModel() {
         col.addSnapshotListener { snap, _ -> foods.value = snap?.toObjects() }
         viewModelScope.launch {
             val foods = col.get().await().toObjects<Food>()
-            col
+            col.get().await().toObjects<Food>()
         }
     }
 
@@ -28,7 +28,7 @@ class FoodViewModel : ViewModel() {
         countCol.addSnapshotListener { snap, _ -> counts.value = snap?.toObjects() }
         viewModelScope.launch {
             val counts = countCol.get().await().toObjects<Count>()
-            countCol
+            countCol.get().await().toObjects<Count>()
         }
     }
 
@@ -39,8 +39,9 @@ class FoodViewModel : ViewModel() {
     }
 
     //Read COUNT
-    fun getCount(docId: String): Count? {
-        return counts.value?.find{ f -> f.docId == docId }
+    suspend fun getCount(docId: String): Int? {
+       val result = countCol.document(docId).get().await()
+        return result.data?.get("count").toString().toIntOrNull()
     }
 
     //Update COUNT
@@ -63,6 +64,7 @@ class FoodViewModel : ViewModel() {
         if (insert) {
             e += if (f.id == "") "- Id is required.\n"
             else if (idExists(f.id)) "- Id is duplicated.\n"
+            //else if (f.id == "5001") "- Please submit again if only Id got problem.\n"
             else ""
 
             e += if (f.name == "") "- Name is required.\n"

@@ -45,4 +45,19 @@
         android:name="com.example.beta.ui.PaymentFragment"
         android:label="Payment"
         tools:layout="@layout/fragment_payment" />
+    <fragment
+        android:id="@+id/sellerFoodFragment"
+        android:name="com.example.beta.ui.SellerFoodFragment"
+        android:label="Food List"
+        tools:layout="@layout/fragment_seller_food" />
+    <fragment
+        android:id="@+id/insertFoodFragment"
+        android:name="com.example.beta.ui.InsertFoodFragment"
+        android:label="Insert Food"
+        tools:layout="@layout/fragment_insert_food" />
+    <fragment
+        android:id="@+id/updateFoodFragment"
+        android:name="com.example.beta.ui.UpdateFoodFragment"
+        android:label="Update Food"
+        tools:layout="@layout/fragment_update_food" />
 </navigation>

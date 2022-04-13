@@ -18,6 +18,7 @@ import com.example.beta.databinding.FragmentPaymentBinding
 import com.example.beta.login.LoginViewModel
 import com.example.beta.util.PaymentAdapter
 import com.example.beta.util.successDialog
+import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 
 
@@ -52,34 +53,7 @@ class PaymentFragment : Fragment() {
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         binding.btnPayment.setOnClickListener {
-                if(voucherId != "No Voucher"){
-                    val c = voucherUsed.getCount("CountVoucherUsed")
-                    var count = c?.count.toString().toIntOrNull()?:0
-                    count += 6000 + 1
-
-                    var setCount = count - 6000
-                    var f = Count(
-                        docId = "CountVoucherUsed",
-                        count = setCount
-                    )
-
-                    val used = VoucherUsed(
-                        docId = count.toString(),
-                        username = model.user.value!!.username,
-                        voucherId = voucherId,
-                        voucherName = voucherName,
-                        voucherCode = code,
-                    )
-
-                    if(shop.isNotEmpty()){
-                        vm.deleteShop(shop,model.user.value!!.username)
-                    }
-
-                    voucherUsed.set(used)
-                    voucherUsed.setCount(f)
-                    successDialog("Make payment successfully")
-                    nav.navigate(R.id.homeFragment)
-                }
+               runBlocking { submit() }
         }
 
         //val range = (1..5).shuffled().last()
@@ -99,6 +73,41 @@ class PaymentFragment : Fragment() {
         binding.txtTotal.text ="RM " + formatter.format(totalPaid)
 
         return binding.root
+    }
+
+    private suspend fun submit(){
+        if(voucherId != "No Voucher"){
+            val c = voucherUsed.getCount("CountVoucherUsed")
+            var count = c?.toInt()
+            count = count?.plus(6000 + 1)
+
+            var setCount = count?.minus(6000)
+            var f = setCount?.let { it1 ->
+                Count(
+                    docId = "CountVoucherUsed",
+                    count = it1
+                )
+            }
+
+            val used = VoucherUsed(
+                docId = count.toString(),
+                username = model.user.value!!.username,
+                voucherId = voucherId,
+                voucherName = voucherName,
+                voucherCode = code,
+            )
+
+            if(shop.isNotEmpty()){
+                vm.deleteShop(shop,model.user.value!!.username)
+            }
+
+            voucherUsed.set(used)
+            if (f != null) {
+                voucherUsed.setCount(f)
+            }
+            successDialog("Make payment successfully")
+            nav.navigate(R.id.homeFragment)
+        }
     }
 
 }

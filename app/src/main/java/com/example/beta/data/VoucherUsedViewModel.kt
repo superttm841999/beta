@@ -34,7 +34,7 @@ class VoucherUsedViewModel : ViewModel() {
         countCol.addSnapshotListener { snap, _ -> counts.value = snap?.toObjects() }
         viewModelScope.launch {
             val counts = countCol.get().await().toObjects<Count>()
-            countCol
+            countCol.get().await().toObjects<Count>()
         }
     }
 
@@ -60,8 +60,9 @@ class VoucherUsedViewModel : ViewModel() {
     fun getCategories() = getAll()
 
     //Read COUNT
-    fun getCount(docId: String): Count? {
-        return counts.value?.find{ f -> f.docId == docId }
+    suspend fun getCount(docId: String): Int? {
+        val result = countCol.document(docId).get().await()
+        return result.data?.get("count").toString().toIntOrNull()
     }
 
     //Update COUNT

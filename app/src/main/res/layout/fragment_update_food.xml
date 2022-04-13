@@ -5,14 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SellerFormFragment">
+    tools:context=".ui.UpdateFoodFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="116dp" />
+        app:layout_constraintGuide_begin="88dp" />
 
     <EditText
         android:id="@+id/edtName"
@@ -22,29 +22,30 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
+        android:fontFamily="@font/delius"
         android:importantForAccessibility="no"
         android:importantForAutofill="no"
         android:inputType="none|textCapWords"
-        android:maxLength="50"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtId"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/edtUsername"
+    <EditText
+        android:id="@+id/edtDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
+        android:fontFamily="@font/delius"
         android:importantForAccessibility="no"
         android:importantForAutofill="no"
         android:inputType="none|textCapWords"
-        android:maxLength="50"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/edtName"
@@ -52,8 +53,8 @@
 
     <ImageView
         android:id="@+id/imgPhoto"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="#CCC"
@@ -61,25 +62,25 @@
         android:padding="1dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/edtUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/edtDescription" />
 
     <Button
         android:id="@+id/btnReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#E91E63"
         android:text="Reset"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtAddress" />
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/spnStatus" />
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:backgroundTint="#03A9F4"
+        android:backgroundTint="#2196F3"
         android:text="Submit"
         app:layout_constraintStart_toEndOf="@+id/btnReset"
         app:layout_constraintTop_toTopOf="@+id/btnReset" />
@@ -87,10 +88,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/delius"
         android:labelFor="@id/edtName"
         android:text="Name"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/edtName"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/edtName" />
@@ -98,33 +100,38 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/edtUsername"
-        android:text="User"
+        android:fontFamily="@font/delius"
+        android:labelFor="@id/edtDescription"
+        android:text="Description"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edtUsername"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/edtDescription"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/edtUsername" />
+        app:layout_constraintTop_toTopOf="@+id/edtDescription" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/delius"
         android:labelFor="@id/imgPhoto"
-        android:text="Logo"
+        android:text="Image"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgPhoto"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/imgPhoto" />
 
-    <Spinner
-        android:id="@+id/spnCat"
+    <TextView
+        android:id="@+id/txtShop"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/delius"
         android:spinnerMode="dialog"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/imgPhoto" />
@@ -132,47 +139,85 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Type"
+        android:fontFamily="@font/delius"
+        android:text="Shop Name"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/spnCat" />
+        app:layout_constraintTop_toTopOf="@+id/txtShop" />
 
     <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Address"
+        android:fontFamily="@font/delius"
+        android:text="Price"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/edtAddress"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/edtPrice"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/edtAddress" />
+        app:layout_constraintTop_toTopOf="@+id/edtPrice" />
 
     <EditText
-        android:id="@+id/edtAddress"
+        android:id="@+id/edtPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@color/black"
-        android:textSize="24sp"
+        android:fontFamily="@font/delius"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/spnCat" />
+        app:layout_constraintTop_toBottomOf="@+id/txtShop" />
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="53dp"
+        android:layout_height="25dp"
+        android:fontFamily="@font/delius"
+        android:text="Status"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/spnStatus"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/spnStatus" />
+
+    <Spinner
+        android:id="@+id/spnStatus"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSubmit"
-        app:layout_constraintStart_toEndOf="@+id/btnSubmit"
-        app:layout_constraintTop_toTopOf="@+id/btnSubmit" />
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/edtPrice" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/delius"
+        android:text="Id"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtId"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/txtId" />
+
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="XXX"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,11 +28,15 @@ data class Seller(
     var name : String = "",
     var date : Date = Date(),
     var logo : Blob = Blob.fromBytes(ByteArray(0)),
+    var userId : String = "",
     var username : String = "",
     var address : String = "",
     //pending -0  approve -1  reject -2
     var status : Int = 0,
-    var category : String = ""
+    var category : String = "",
+    var approvalUser : String = "",
+    var approvalName : String = "",
+    var approvalEmail : String = ""
 ){
     @get:Exclude
     var count: Int = 0
@@ -74,6 +78,7 @@ data class VoucherUsed(
     var voucherName : String = "",
     var voucherCode : String = "",
 )
+
 
 val APPLICATION_FORM = Firebase.firestore.collection("Seller")
 val FOODS = Firebase.firestore.collection("Food")

@@ -182,7 +182,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun routeActivity(value: User){
-        if(value.role == 0){
+        if(value.role == 0 || value.role == 1){
             var intent = Intent(activity, MainActivity::class.java).apply{
                 putExtra("USER_INFO", value)
             }
