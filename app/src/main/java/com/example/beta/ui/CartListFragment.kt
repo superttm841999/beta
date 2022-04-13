@@ -8,17 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.beta.R
 import com.example.beta.data.CartViewModel
+import com.example.beta.data.VoucherUsed
+import com.example.beta.data.VoucherUsedViewModel
 import com.example.beta.data.VoucherViewModel
 import com.example.beta.databinding.FragmentCartListBinding
+import com.example.beta.login.LoginViewModel
 import com.example.beta.util.CartAdapter
-import com.example.beta.util.errorDialog
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,8 +36,10 @@ class CartListFragment : Fragment() {
     private val nav by lazy { findNavController() }
     private val vm: CartViewModel by activityViewModels()
     private val vc: VoucherViewModel by activityViewModels()
+    private val voucherUsed: VoucherUsedViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
     private val date = Date()
+    private val model: LoginViewModel by activityViewModels()
 
     private val format = SimpleDateFormat("yyyyMMdd")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,7 +48,7 @@ class CartListFragment : Fragment() {
         var shop_name = ArrayList<String>()
         shop_name.add("--SELECT--")
 
-        vm.getAll().observe(viewLifecycleOwner){shop ->
+        vm.getAll(model.user.value!!.username).observe(viewLifecycleOwner){shop ->
             for(s in shop){
                 shop_name.add(s.shop_name)
             }
@@ -70,7 +77,7 @@ class CartListFragment : Fragment() {
             if(binding.spnShop.selectedItem.toString() == "--SELECT--"){
                 nav.navigate(R.id.cartListFragment)
             }
-            vm.getShop(binding.spnShop.selectedItem.toString()).observe(viewLifecycleOwner){carts ->
+            vm.getShop(binding.spnShop.selectedItem.toString(),model.user.value!!.username).observe(viewLifecycleOwner){carts ->
                 adapter.submitList(carts)
             }
         }
@@ -86,14 +93,18 @@ class CartListFragment : Fragment() {
         var total = 0.00
 
         binding.btnPay.setOnClickListener {
-            vm.getShop(binding.spnShop.selectedItem.toString()).observe(viewLifecycleOwner){carts ->
+            vm.getShop(binding.spnShop.selectedItem.toString(),model.user.value!!.username).observe(viewLifecycleOwner){carts ->
+                val vvv =  runBlocking {vc.get(binding.edtVoucher.text.toString())}
+                Log.d("try", runBlocking {vc.get(binding.edtVoucher.text.toString())}.toString())
 
-
-                val vvv = vc.get(binding.edtVoucher.text.toString())
+                val getId = vvv?.docId
+                Log.d("try1",  getId.toString())
                 val err = vvv?.let { it1 -> vc.validate(it1) }
+                Log.d("test",err.toString())
 
                     if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
                         if(binding.edtVoucher.text.toString().isEmpty()){
+
                             for(c in carts){
                                 total += (c.price * c.count)
                             }
@@ -102,9 +113,12 @@ class CartListFragment : Fragment() {
                                     "shop" to binding.spnShop.selectedItem.toString(),
                                     "voucher" to 0,
                                     "voucher name" to "No Voucher",
+                                    "voucherId" to "No Id",
+                                    "code" to "No Code",
                                 )
                             )
                         }else{
+
                             val cmp = vvv?.startDate?.compareTo(format.format(date).toString()) //-1
                             val cmpEnd = vvv?.endDate?.compareTo(format.format(date).toString()) //-1
                             Log.d("check",format.format(date).toString())
@@ -114,16 +128,35 @@ class CartListFragment : Fragment() {
                                 if(err == true && vvv.status == 1 ){
                                     if (cmp != null && cmpEnd !=null) {
                                         if(cmp >= 0 && cmpEnd <= 0){
-                                            for(c in carts){
-                                                total += (c.price * c.count)
+                                            Firebase.firestore.collection("VoucherUsed").get().addOnSuccessListener {
+                                                    snap ->
+                                                val list = snap.toObjects<VoucherUsed>()
+
+                                                list.forEach { f->
+                                                    if(f.voucherId == getId && f.username == model.user.value!!.username){
+                                                        AlertDialog.Builder(context)
+                                                            .setIcon(R.drawable.ic_error)
+                                                            .setTitle("Error")
+                                                            .setMessage("You have used this code already")
+                                                            .setPositiveButton("Dismiss", null)
+                                                            .show()
+                                                        nav.navigateUp()
+                                                    }
+                                                }
+
                                             }
-                                            nav.navigate(R.id.paymentFragment,
-                                                bundleOf("id" to total,
-                                                    "shop" to binding.spnShop.selectedItem.toString(),
-                                                    "voucher" to vvv?.value,
-                                                    "voucher name" to vvv?.name,
+                                                for(c in carts){
+                                                    total += (c.price * c.count)
+                                                }
+                                                nav.navigate(R.id.paymentFragment,
+                                                    bundleOf("id" to total,
+                                                        "shop" to binding.spnShop.selectedItem.toString(),
+                                                        "voucher" to vvv?.value,
+                                                        "voucher name" to vvv?.name,
+                                                        "voucherId" to vvv?.docId,
+                                                        "code" to vvv?.code,
+                                                    )
                                                 )
-                                            )
                                         }else{
                                             AlertDialog.Builder(context)
                                                 .setIcon(R.drawable.ic_error)

@@ -13,13 +13,19 @@ class VoucherViewModel : ViewModel() {
     private val col = Firebase.firestore.collection("Voucher")
     private val forms = MutableLiveData<List<Voucher>>()
 
+
     init {
         col.addSnapshotListener { snap, _ -> forms.value = snap?.toObjects() }
+        viewModelScope.launch {
+            val vouchers = col.get().await().toObjects<Voucher>()
+            col
+        }
     }
 
 
-    fun get(code: String): Voucher? {
+    suspend fun get(code: String): Voucher? {
         return forms.value?.find{ f -> f.code == code }
+
     }
 
     fun getAll() = forms

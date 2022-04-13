@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.beta.R
 import com.example.beta.data.*
 import com.example.beta.databinding.FragmentFoodDetailBinding
+import com.example.beta.login.LoginViewModel
 import com.example.beta.util.toBitmap
 import java.text.DecimalFormat
 
@@ -25,6 +26,7 @@ class FoodDetailFragment : Fragment() {
     private val formatter = DecimalFormat("0.00")
     private val cvm: CartViewModel by activityViewModels()
     private var price = 0.00
+    private val model: LoginViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -61,7 +63,8 @@ class FoodDetailFragment : Fragment() {
             name = binding.txtFoodDetailName.text.toString(),
             price = price.toString().toDoubleOrNull() ?: 0.00,
             count = binding.edtQty.text.toString().toIntOrNull()?:1,
-            shop_name = shop
+            shop_name = shop,
+            username = model.user.value!!.username
         )
         cvm.insert(c)
         nav.navigate(R.id.cartListFragment)

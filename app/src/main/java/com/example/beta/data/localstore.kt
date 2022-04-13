@@ -12,13 +12,14 @@ data class Cart (
     var name : String,
     var price: Double,
     var count: Int=0,
-    var shop_name : String,
+    var shop_name : String="",
+    var username : String = "",
 )
 
 @Dao
 interface CartDao {
-    @Query("SELECT * FROM Cart")
-    fun getAll(): LiveData<List<Cart>>
+    @Query("SELECT * FROM Cart WHERE username = :username")
+    fun getAll(username : String): LiveData<List<Cart>>
 
     @Query("SELECT * FROM Cart WHERE id = :id")
     fun get(id :String): LiveData<Cart>
@@ -26,8 +27,8 @@ interface CartDao {
     @Query("SELECT * FROM Cart WHERE name = :name")
     fun getName(name :String): LiveData<Cart>
 
-    @Query("SELECT * FROM Cart WHERE shop_name = :shop_name")
-    fun getShop(shop_name :String): LiveData<List<Cart>>
+    @Query("SELECT * FROM Cart WHERE shop_name = :shop_name AND username= :username")
+    fun getShop(shop_name :String, username : String): LiveData<List<Cart>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(f:Cart) //Long -> row id
@@ -37,6 +38,9 @@ interface CartDao {
 
     @Delete
     suspend fun delete(f:Cart) //Int -> count
+
+    @Query("DELETE FROM Cart WHERE shop_name = :shop_name AND username= :username")
+    suspend fun deleteShop(shop_name :String, username : String)
 
     @Query("DELETE FROM Cart")
     suspend fun deleteAll()

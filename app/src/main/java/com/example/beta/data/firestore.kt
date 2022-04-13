@@ -66,5 +66,14 @@ data class Voucher(
     var endDate : String = "",
 )
 
+data class VoucherUsed(
+    @DocumentId
+    var docId : String = "",
+    var username : String = "",
+    var voucherId : String = "",
+    var voucherName : String = "",
+    var voucherCode : String = "",
+)
+
 val APPLICATION_FORM = Firebase.firestore.collection("Seller")
 val FOODS = Firebase.firestore.collection("Food")
