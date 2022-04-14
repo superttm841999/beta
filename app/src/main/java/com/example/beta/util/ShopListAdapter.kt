@@ -42,6 +42,8 @@ class ShopListAdapter (
             holder.imgLogo.setImageBitmap(application.logo.toBitmap())
             holder.txtName.text  = application.name
 
+
+
             // TODO(9): Display [count] field
             holder.txtCount.text = "${application.count} Food(s) "
             fn(holder, application)

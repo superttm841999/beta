@@ -16,7 +16,11 @@ class SellerViewModel : ViewModel() {
     private val counts = MutableLiveData<List<Count>>()
 
     init {
-        col.addSnapshotListener { snap, _ -> forms.value = snap?.toObjects() }
+
+        viewModelScope.launch {
+            val cols = col.get().await().toObjects<Seller>()
+            col.addSnapshotListener { snap, _ -> forms.value = snap?.toObjects() }
+        }
     }
 
     init {
@@ -29,6 +33,10 @@ class SellerViewModel : ViewModel() {
 
     fun get(docId: String): Seller? {
         return forms.value?.find{ f -> f.docId == docId }
+    }
+
+    fun getName(name: String): Seller? {
+        return forms.value?.find{ f -> f.name == name }
     }
 
     fun getAll() = forms

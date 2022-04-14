@@ -79,6 +79,34 @@ data class VoucherUsed(
     var voucherCode : String = "",
 )
 
+data class OrderFood(
+    @DocumentId
+    var docId : String = "",
+    var orderId : String = "",
+    var foodId : String = "",
+    var quantity : Int = 0,
+){
+    @get:Exclude
+    var order: Order = Order()
+    @get:Exclude
+    var application: Seller = Seller()
+}
+
+data class Order(
+    @DocumentId
+    var docId : String = "",
+    var payment : Double =  0.00,
+    // //Pending -0  Accepted -1  Rejected -2  Done -3
+    var status : Int = 0,
+    var userId : String = "",
+    var sellerId : String = "",
+){
+    @get:Exclude
+    var count: Int = 0
+}
+
 
 val APPLICATION_FORM = Firebase.firestore.collection("Seller")
 val FOODS = Firebase.firestore.collection("Food")
+val ORDERS = Firebase.firestore.collection("Order")
+val ORDER_DETAIL = Firebase.firestore.collection("OrderFood")

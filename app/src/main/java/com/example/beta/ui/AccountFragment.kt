@@ -87,6 +87,10 @@ class AccountFragment : Fragment() {
 
         }
 
+        binding.btnOrderHistory.setOnClickListener {
+            nav.navigate(R.id.orderHistoryListFragment)
+        }
+
         return binding.root
     }
 }

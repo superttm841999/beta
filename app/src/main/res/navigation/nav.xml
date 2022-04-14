@@ -60,4 +60,9 @@
         android:name="com.example.beta.ui.UpdateFoodFragment"
         android:label="Update Food"
         tools:layout="@layout/fragment_update_food" />
+    <fragment
+        android:id="@+id/orderHistoryListFragment"
+        android:name="com.example.beta.ui.OrderHistoryListFragment"
+        android:label="Order History"
+        tools:layout="@layout/fragment_order_history_list" />
 </navigation>
