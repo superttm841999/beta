@@ -12,6 +12,7 @@ import com.example.beta.R
 import com.example.beta.data.*
 import com.example.beta.databinding.FragmentFoodDetailBinding
 import com.example.beta.login.LoginViewModel
+import com.example.beta.util.errorDialog
 import com.example.beta.util.toBitmap
 import java.text.DecimalFormat
 
@@ -66,6 +67,12 @@ class FoodDetailFragment : Fragment() {
             shop_name = shop,
             username = model.user.value!!.username
         )
+
+        val err = cvm.validate(c)
+        if(err != ""){
+            errorDialog(err)
+            return
+        }
         cvm.insert(c)
         nav.navigate(R.id.cartListFragment)
     }

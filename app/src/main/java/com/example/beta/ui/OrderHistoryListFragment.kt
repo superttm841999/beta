@@ -32,7 +32,7 @@ class OrderHistoryListFragment : Fragment() {
 
         val adapter = OrderHistoryAdapter() { holder, order ->
             holder.root.setOnClickListener {
-               // nav.navigate(R.id.shopFoodAdminFragment, bundleOf("id" to category.docId))
+                nav.navigate(R.id.orderHistoryDetailFragment, bundleOf("orderId" to order.docId,"total" to order.payment))
             }
         }
 

@@ -119,9 +119,18 @@ class CartListFragment : Fragment() {
                             )
                         }else{
 
-                            val cmp = vvv?.startDate?.compareTo(format.format(date).toString()) //-1
-                            val cmpEnd = vvv?.endDate?.compareTo(format.format(date).toString()) //-1
-                            Log.d("check",format.format(date).toString())
+                            val cmp =
+                                vvv?.startDate?.let { it1 ->
+                                    format.format(date).toString().compareTo(
+                                        it1
+                                    )
+                                } //-1
+                            val cmpEnd =
+                                vvv?.endDate?.let { it1 ->
+                                    format.format(date).toString().compareTo(
+                                        it1
+                                    )
+                                } //-1
 
                             Log.d("check",cmp.toString())
                             Log.d("checks",cmpEnd.toString())

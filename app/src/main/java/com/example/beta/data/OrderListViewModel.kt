@@ -36,6 +36,11 @@ class OrderListViewModel: ViewModel() {
         return orders
     }
 
+    suspend fun getOrderId(orderId: String): List<OrderFood> {
+
+        return ORDER_DETAIL.whereEqualTo("orderId", orderId).get().await().toObjects<OrderFood>()
+    }
+
     suspend fun get(docId: String): Order? {
         return ORDERS.document(docId).get().await().toObject<Order>()
     }

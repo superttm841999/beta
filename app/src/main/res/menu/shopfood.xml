@@ -3,6 +3,6 @@
     <group android:id="@+id/shopFood" >
         <item
             android:id="@+id/cartListFragment"
-            android:title="Cart" />
+            android:title="我的购物车" />
     </group>
 </menu>

@@ -65,7 +65,7 @@ class PaymentFragment : Fragment() {
         var foodDiscount = voucher
 
         Log.d("voucher",voucher.toString())
-        binding.txtSubTotal.text = "RM " + formatter.format(total-foodDiscount)
+        binding.txtSubTotal.text = "RM " + formatter.format(total)
 
         binding.txtVoucher.text = voucherName
 
@@ -145,7 +145,12 @@ class PaymentFragment : Fragment() {
             payment = totalPaid,
             status = 0,
             userId = model.user.value!!.id,
-            sellerId = sellerId
+            sellerId = sellerId,
+            deliveryFee = 5,
+            subTotal = total,
+            tax = 6,
+            voucherName = voucherName,
+            voucherValue = voucher,
         )
 
         runBlocking { addToOrderFood(count!!) }

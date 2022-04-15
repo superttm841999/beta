@@ -12,12 +12,12 @@
         <item
             android:id="@+id/accountFragment"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="Account" />
+            android:title="我的" />
         <item
             android:id="@+id/shopFoodFragment"
-            android:title="Shop / Food" />
+            android:title="Endao食物区" />
         <item
             android:id="@+id/logoutFragment"
-            android:title="Logout" />
+            android:title="登出" />
     </group>
 </menu>

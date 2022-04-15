@@ -90,6 +90,8 @@ data class OrderFood(
     var order: Order = Order()
     @get:Exclude
     var application: Seller = Seller()
+    @get:Exclude
+    var count: Int = 0
 }
 
 data class Order(
@@ -100,6 +102,11 @@ data class Order(
     var status : Int = 0,
     var userId : String = "",
     var sellerId : String = "",
+    var deliveryFee : Int = 0,
+    var subTotal : Double = 0.00,
+    var tax : Int = 0,
+    var voucherName : String = "",
+    var voucherValue : Int = 0,
 ){
     @get:Exclude
     var count: Int = 0

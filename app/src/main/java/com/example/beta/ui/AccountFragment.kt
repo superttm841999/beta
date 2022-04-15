@@ -67,7 +67,7 @@ class AccountFragment : Fragment() {
                     list.forEach { f->
                        if(f.username == model.user.value!!.username && f.status == 1){
                            Toast.makeText(context,"Welcome Back",Toast.LENGTH_SHORT).show()
-                           nav.navigate(R.id.sellerFoodFragment, bundleOf("id" to f.docId,"shopName" to f.name))
+                           nav.navigate(R.id.sellerFragment, bundleOf("id" to f.docId,"shopName" to f.name))
 
                        }else if(f.username == model.user.value!!.username && f.status == 2){
                            AlertDialog.Builder(context)

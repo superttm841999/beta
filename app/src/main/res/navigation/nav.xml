@@ -8,61 +8,71 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.beta.ui.HomeFragment"
-        android:label="fragment_home"
+        android:label="首页"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/sellerFormFragment"
         android:name="com.example.beta.ui.SellerFormFragment"
-        android:label="Seller Application Form"
+        android:label="店家申请表格"
         tools:layout="@layout/fragment_seller_form" />
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.beta.ui.AccountFragment"
-        android:label="Account"
+        android:label="我的"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/shopFoodFragment"
         android:name="com.example.beta.ui.ShopFoodFragment"
-        android:label="Shop / Food "
+        android:label="店家"
         tools:layout="@layout/fragment_shop_food" />
     <fragment
         android:id="@+id/cartListFragment"
         android:name="com.example.beta.ui.CartListFragment"
-        android:label="Food Cart"
+        android:label="我的购物车"
         tools:layout="@layout/fragment_cart_list" />
     <fragment
         android:id="@+id/foodListFragment"
         android:name="com.example.beta.ui.FoodListFragment"
-        android:label="Food List"
+        android:label="食物列表"
         tools:layout="@layout/fragment_food_list" />
     <fragment
         android:id="@+id/foodDetailFragment"
         android:name="com.example.beta.ui.FoodDetailFragment"
-        android:label="fragment_food_detail"
+        android:label="食物详细资料"
         tools:layout="@layout/fragment_food_detail" />
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.example.beta.ui.PaymentFragment"
-        android:label="Payment"
+        android:label="付款"
         tools:layout="@layout/fragment_payment" />
     <fragment
         android:id="@+id/sellerFoodFragment"
         android:name="com.example.beta.ui.SellerFoodFragment"
-        android:label="Food List"
+        android:label="食物列表"
         tools:layout="@layout/fragment_seller_food" />
     <fragment
         android:id="@+id/insertFoodFragment"
         android:name="com.example.beta.ui.InsertFoodFragment"
-        android:label="Insert Food"
+        android:label="食物插入"
         tools:layout="@layout/fragment_insert_food" />
     <fragment
         android:id="@+id/updateFoodFragment"
         android:name="com.example.beta.ui.UpdateFoodFragment"
-        android:label="Update Food"
+        android:label="食物更新"
         tools:layout="@layout/fragment_update_food" />
     <fragment
         android:id="@+id/orderHistoryListFragment"
         android:name="com.example.beta.ui.OrderHistoryListFragment"
-        android:label="Order History"
+        android:label="我的订单"
         tools:layout="@layout/fragment_order_history_list" />
+    <fragment
+        android:id="@+id/orderHistoryDetailFragment"
+        android:name="com.example.beta.ui.OrderHistoryDetailFragment"
+        android:label="订单详细资料"
+        tools:layout="@layout/fragment_order_history_detail" />
+    <fragment
+        android:id="@+id/sellerFragment"
+        android:name="com.example.beta.ui.SellerFragment"
+        android:label="卖家"
+        tools:layout="@layout/fragment_seller" />
 </navigation>
