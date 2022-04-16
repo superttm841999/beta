@@ -2,6 +2,7 @@ package com.example.beta.ui
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ class SellerFragment : Fragment() {
     private lateinit var binding: FragmentSellerBinding
     private val nav by lazy { findNavController() }
     private val shopName by lazy { requireArguments().getString("shopName") ?: "" }
+    private val id by lazy { requireArguments().getString("id") ?: "" }
     private val model: LoginViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,8 +36,8 @@ class SellerFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
-            R.id.sellerFoodFragment -> nav.navigate(R.id.sellerFoodFragment)
-            R.id.orderListFragment -> nav.navigate(R.id.orderListFragment)
+            R.id.sellerFoodFragment -> nav.navigate(R.id.sellerFoodFragment,bundleOf("shopName" to shopName, "id" to id))
+            R.id.orderListFragment -> nav.navigate(R.id.orderListFragment, bundleOf("id" to id))
         }
         return super.onOptionsItemSelected(item)
     }

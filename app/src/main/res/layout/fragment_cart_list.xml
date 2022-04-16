@@ -100,7 +100,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Display List"
+        android:text="Show"
         app:layout_constraintBottom_toBottomOf="@+id/spnShop"
         app:layout_constraintStart_toEndOf="@+id/spnShop"
         app:layout_constraintTop_toTopOf="@+id/spnShop" />
@@ -110,6 +110,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Refresh"
         app:layout_constraintBottom_toBottomOf="@+id/btnChange"
         app:layout_constraintEnd_toEndOf="parent"

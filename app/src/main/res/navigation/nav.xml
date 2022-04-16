@@ -73,6 +73,41 @@
     <fragment
         android:id="@+id/sellerFragment"
         android:name="com.example.beta.ui.SellerFragment"
-        android:label="卖家"
+        android:label="卖家首页"
         tools:layout="@layout/fragment_seller" />
+    <fragment
+        android:id="@+id/orderListFragment"
+        android:name="com.example.beta.ui.OrderListFragment"
+        android:label="订单主页"
+        tools:layout="@layout/fragment_order_list" />
+    <fragment
+        android:id="@+id/inProgressOrderFragment"
+        android:name="com.example.beta.ui.InProgressOrderFragment"
+        android:label="进行中"
+        tools:layout="@layout/fragment_in_progress_order" />
+    <fragment
+        android:id="@+id/doneOrderFragment"
+        android:name="com.example.beta.ui.DoneOrderFragment"
+        android:label="已完成"
+        tools:layout="@layout/fragment_done_order" />
+    <fragment
+        android:id="@+id/pendingOrderFragment"
+        android:name="com.example.beta.ui.PendingOrderFragment"
+        android:label="等待中"
+        tools:layout="@layout/fragment_pending_order" />
+    <fragment
+        android:id="@+id/pendingOrderDetailFragment"
+        android:name="com.example.beta.ui.PendingOrderDetailFragment"
+        android:label="确认订单"
+        tools:layout="@layout/fragment_pending_order_detail" />
+    <fragment
+        android:id="@+id/inProgressOrderDetailFragment"
+        android:name="com.example.beta.ui.InProgressOrderDetailFragment"
+        android:label="已接受的订单"
+        tools:layout="@layout/fragment_in_progress_order_detail" />
+    <fragment
+        android:id="@+id/doneOrderDetailFragment"
+        android:name="com.example.beta.ui.DoneOrderDetailFragment"
+        android:label="详细资料"
+        tools:layout="@layout/fragment_done_order_detail" />
 </navigation>

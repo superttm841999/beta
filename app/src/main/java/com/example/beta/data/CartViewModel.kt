@@ -28,8 +28,10 @@ class CartViewModel : ViewModel() {
     fun validate(f: Cart): String {
         var err = ""
 
-        if(f.count == 0){
+        if(f.count <= 0){
             err+= "- Quantity should be at least 1.\n"
+        }else if(f.count >10){
+            err+= "- Quantity cannot more than 10.\n"
         }
 
         return err

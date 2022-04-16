@@ -151,6 +151,7 @@ class PaymentFragment : Fragment() {
             tax = 6,
             voucherName = voucherName,
             voucherValue = voucher,
+            progress = 0,
         )
 
         runBlocking { addToOrderFood(count!!) }

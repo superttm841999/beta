@@ -1,5 +1,6 @@
 package com.example.beta.util
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,9 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
 
-class OrderHistoryAdapter (
+class InProgressOrderAdapter (
     val fn: (ViewHolder, Order) -> Unit = { _, _ -> }
-) : ListAdapter<Order, OrderHistoryAdapter.ViewHolder>(DiffCallback) {
+) : ListAdapter<Order, InProgressOrderAdapter.ViewHolder>(DiffCallback) {
 
     private val formatter = DecimalFormat("0.00")
 
@@ -48,30 +49,34 @@ class OrderHistoryAdapter (
         val order = getItem(position)
 
 
-            Firebase.firestore.collection("Seller").get().addOnSuccessListener {
-                    snap ->
-                val list = snap.toObjects<Seller>()
-                list.forEach { l ->
-                    if(l.docId == order.sellerId){
+        Firebase.firestore.collection("Seller").get().addOnSuccessListener {
+                snap ->
+            val list = snap.toObjects<Seller>()
+            list.forEach { l ->
+                if(l.docId == order.sellerId){
+                    if(order.status == 1 && order.progress == 1){
                         holder.imgLogo.setImageBitmap(l.logo.toBitmap())
                         holder.txtName.text  = l.name
-                        when(order.status){
-                            0 -> holder.txtStatus.text  = "进行中"
-                            1 -> holder.txtStatus.text  = "已接受"
-                            2 -> holder.txtStatus.text = "已拒绝"
-                            else -> holder.txtStatus.text = "啥玩意"
+                        var status = when(order.status){
+                            0 ->  "进行中"
+                            1 ->  "已接受"
+                            2 ->  "已拒绝"
+                            else ->  "啥玩意"
+                        }
+                        holder.txtStatus.text  = status
+                        var color = when(order.status){
+                            0 -> holder.txtStatus.setTextColor(Color.parseColor("#000FF"))
+                            1 -> holder.txtStatus.setTextColor(Color.parseColor("#00FF00"))
+                            2 -> holder.txtStatus.setTextColor(Color.parseColor("#FF0000"))
+                            else -> ""
                         }
                         holder.txtOrderId.text  = "产品ID # ${order.docId}"
                         holder.txtTotal.text  = "RM ${formatter.format(order.payment)}"
                         holder.txtCount.text = "- ${order.count} 产品"
                         fn(holder, order)
                     }
-
                 }
-
             }
-
-
+        }
     }
-
 }

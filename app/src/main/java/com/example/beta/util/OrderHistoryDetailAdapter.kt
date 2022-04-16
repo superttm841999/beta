@@ -58,7 +58,7 @@ class OrderHistoryDetailAdapter (
                     holder.imgFood.setImageBitmap(l.image.toBitmap())
                     holder.txtName.text  = l.name
                     holder.txtPrice.text  = "RM ${formatter.format(l.price)}"
-                    holder.txtQty.text = "${order.quantity} qty"
+                    holder.txtQty.text = "X ${order.quantity}"
                     fn(holder, order)
                 }
 

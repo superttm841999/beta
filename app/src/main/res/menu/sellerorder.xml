@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/shopFood" >
+        <item
+            android:id="@+id/pendingOrderFragment"
+            android:title="等待中" />
+        <item
+            android:id="@+id/inProgressOrderFragment"
+            android:title="进行中" />
+        <item
+            android:id="@+id/doneOrderFragment"
+            android:title="已完成" />
+    </group>
+</menu>

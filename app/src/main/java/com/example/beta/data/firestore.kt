@@ -98,7 +98,7 @@ data class Order(
     @DocumentId
     var docId : String = "",
     var payment : Double =  0.00,
-    // //Pending -0  Accepted -1  Rejected -2  Done -3
+    // //Pending -0  Accepted -1  Rejected -2
     var status : Int = 0,
     var userId : String = "",
     var sellerId : String = "",
@@ -107,6 +107,8 @@ data class Order(
     var tax : Int = 0,
     var voucherName : String = "",
     var voucherValue : Int = 0,
+    //Pending-0 In Progress-1  Done -2
+    var progress : Int = 0
 ){
     @get:Exclude
     var count: Int = 0
