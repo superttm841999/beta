@@ -64,8 +64,8 @@ class DoneOrderAdapter (
                             else ->  "啥玩意"
                         }
                         holder.txtStatus.text  = status
-                        var color = when(order.status){
-                            0 -> holder.txtStatus.setTextColor(Color.parseColor("#000FF"))
+                        when(order.status){
+                            0 -> holder.txtStatus.setTextColor(Color.parseColor("#ADD8E6"))
                             1 -> holder.txtStatus.setTextColor(Color.parseColor("#00FF00"))
                             2 -> holder.txtStatus.setTextColor(Color.parseColor("#FF0000"))
                             else -> ""

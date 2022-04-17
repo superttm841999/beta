@@ -50,7 +50,7 @@ class InProgressOrderDetailFragment : Fragment() {
                     if(l.docId ==orderId){
                         binding.txtDeliveryFee.text = "RM ${formatter.format(l.deliveryFee)}"
                         binding.txtSubtotal.text = "RM ${formatter.format(l.subTotal)}"
-                        binding.txtTax.text = "RM ${formatter.format(l.tax)}"
+                        binding.txtTax.text = "${formatter.format(l.tax)} %"
                         binding.txtVoucher.text = "RM ${formatter.format(l.voucherValue)}"
                         binding.txtVoucherName.text = "(" + l.voucherName + ")"
                         binding.txtTotal.text = "RM ${formatter.format(l.payment)}"

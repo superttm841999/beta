@@ -36,8 +36,6 @@ class OrderListViewModel: ViewModel() {
                 }
 
             }
-
-
         }
     }
 
