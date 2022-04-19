@@ -1,5 +1,6 @@
 package com.example.beta
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -7,6 +8,7 @@ import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,7 +16,9 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.beta.databinding.ActivityMainBinding
+import com.example.beta.login.LoginActivity
 import com.example.beta.util.BaseActivity
+import com.example.beta.util.rmUserSR
 
 class MainActivity : BaseActivity() {
 
@@ -44,6 +48,17 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // TODO: Only handle main menu group and home
         if(item.groupId != R.id.main && item.itemId != R.id.homeFragment) return false
+
+        when (item.itemId){
+
+            R.id.logoutFragment -> {
+                rmUserSR(this)
+                var intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                this.finish()
+            }
+        }
+
 
         //clear backstack
         return item.onNavDestinationSelected(nav) || super.onOptionsItemSelected(item)
