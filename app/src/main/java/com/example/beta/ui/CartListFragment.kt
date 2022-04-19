@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.beta.R
+import com.example.beta.address.AddressViewModel
 import com.example.beta.data.CartViewModel
 import com.example.beta.data.VoucherUsed
 import com.example.beta.data.VoucherUsedViewModel
@@ -36,6 +37,7 @@ class CartListFragment : Fragment() {
     private val nav by lazy { findNavController() }
     private val vm: CartViewModel by activityViewModels()
     private val vc: VoucherViewModel by activityViewModels()
+    private val am: AddressViewModel by activityViewModels()
     private val voucherUsed: VoucherUsedViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
     private val date = Date()
@@ -55,10 +57,33 @@ class CartListFragment : Fragment() {
             val arrayAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,shop_name.distinct())
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spnShop.adapter = arrayAdapter
-            Log.d("checkb",shop_name.distinct().toString())
+            //Log.d("checkb",shop_name.distinct().toString())
 
         }
 
+
+        var address = ArrayList<String>()
+
+        am.addresses.observe(viewLifecycleOwner){_ ->
+            if (am.getSize() != 0) {
+                for (a in am.getDefaultAtFirst()!!) {
+                    address.add(a.detailAddress)
+                }
+            }else{
+                address.add("--SELECT--")
+            }
+
+
+                val arrayAdapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    address
+                )
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spnAddress.adapter = arrayAdapter
+                //Log.d("checkb",shop_name.distinct().toString())
+
+        }
 
 
         val adapter = CartAdapter() { holder, f ->
@@ -93,14 +118,23 @@ class CartListFragment : Fragment() {
         var total = 0.00
 
         binding.btnPay.setOnClickListener {
-            vm.getShop(binding.spnShop.selectedItem.toString(),model.user.value!!.username).observe(viewLifecycleOwner){carts ->
-                val vvv =  runBlocking {vc.get(binding.edtVoucher.text.toString())}
-                Log.d("try", runBlocking {vc.get(binding.edtVoucher.text.toString())}.toString())
+            if(binding.spnAddress.selectedItem.toString()=="--SELECT--"){
+                AlertDialog.Builder(context)
+                    .setIcon(R.drawable.ic_error)
+                    .setTitle("Error")
+                    .setMessage("Address is Not Found")
+                    .setPositiveButton("Dismiss", null)
+                    .show()
+                nav.navigate(R.id.addressAddFragment3)
+            }else{
+                vm.getShop(binding.spnShop.selectedItem.toString(),model.user.value!!.username).observe(viewLifecycleOwner){carts ->
+                    val vvv =  runBlocking {vc.get(binding.edtVoucher.text.toString())}
+                    Log.d("try", runBlocking {vc.get(binding.edtVoucher.text.toString())}.toString())
 
-                val getId = vvv?.docId
-                Log.d("try1",  getId.toString())
-                val err = vvv?.let { it1 -> vc.validate(it1) }
-                Log.d("test",err.toString())
+                    val getId = vvv?.docId
+                    Log.d("try1",  getId.toString())
+                    val err = vvv?.let { it1 -> vc.validate(it1) }
+                    Log.d("test",err.toString())
 
                     if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
                         if(binding.edtVoucher.text.toString().isEmpty()){
@@ -115,6 +149,7 @@ class CartListFragment : Fragment() {
                                     "voucher name" to "No Voucher",
                                     "voucherId" to "No Id",
                                     "code" to "No Code",
+                                    "address" to binding.spnAddress.selectedItem.toString()
                                 )
                             )
                         }else{
@@ -134,58 +169,59 @@ class CartListFragment : Fragment() {
 
                             Log.d("check",cmp.toString())
                             Log.d("checks",cmpEnd.toString())
-                                if(err == true && vvv.status == 1 ){
-                                    if (cmp != null && cmpEnd !=null) {
-                                        if(cmp >= 0 && cmpEnd <= 0){
-                                            Firebase.firestore.collection("VoucherUsed").get().addOnSuccessListener {
-                                                    snap ->
-                                                val list = snap.toObjects<VoucherUsed>()
+                            if(err == true && vvv.status == 1 ){
+                                if (cmp != null && cmpEnd !=null) {
+                                    if(cmp >= 0 && cmpEnd <= 0){
+                                        Firebase.firestore.collection("VoucherUsed").get().addOnSuccessListener {
+                                                snap ->
+                                            val list = snap.toObjects<VoucherUsed>()
 
-                                                list.forEach { f->
-                                                    if(f.voucherId == getId && f.username == model.user.value!!.username){
-                                                        AlertDialog.Builder(context)
-                                                            .setIcon(R.drawable.ic_error)
-                                                            .setTitle("Error")
-                                                            .setMessage("You have used this code already")
-                                                            .setPositiveButton("Dismiss", null)
-                                                            .show()
-                                                        nav.navigateUp()
-                                                    }
+                                            list.forEach { f->
+                                                if(f.voucherId == getId && f.username == model.user.value!!.username){
+                                                    AlertDialog.Builder(context)
+                                                        .setIcon(R.drawable.ic_error)
+                                                        .setTitle("Error")
+                                                        .setMessage("You have used this code already")
+                                                        .setPositiveButton("Dismiss", null)
+                                                        .show()
+                                                    nav.navigateUp()
                                                 }
-
                                             }
-                                                for(c in carts){
-                                                    total += (c.price * c.count)
-                                                }
-                                                nav.navigate(R.id.paymentFragment,
-                                                    bundleOf("id" to total,
-                                                        "shop" to binding.spnShop.selectedItem.toString(),
-                                                        "voucher" to vvv?.value,
-                                                        "voucher name" to vvv?.name,
-                                                        "voucherId" to vvv?.docId,
-                                                        "code" to vvv?.code,
-                                                    )
-                                                )
-                                        }else{
-                                            AlertDialog.Builder(context)
-                                                .setIcon(R.drawable.ic_error)
-                                                .setTitle("Error")
-                                                .setMessage("Code is expired")
-                                                .setPositiveButton("Dismiss", null)
-                                                .show()
-                                            return@observe
-                                        }
 
+                                        }
+                                        for(c in carts){
+                                            total += (c.price * c.count)
+                                        }
+                                        nav.navigate(R.id.paymentFragment,
+                                            bundleOf("id" to total,
+                                                "shop" to binding.spnShop.selectedItem.toString(),
+                                                "voucher" to vvv?.value,
+                                                "voucher name" to vvv?.name,
+                                                "voucherId" to vvv?.docId,
+                                                "code" to vvv?.code,
+                                                "address" to binding.spnAddress.selectedItem.toString()
+                                            )
+                                        )
+                                    }else{
+                                        AlertDialog.Builder(context)
+                                            .setIcon(R.drawable.ic_error)
+                                            .setTitle("Error")
+                                            .setMessage("Code is expired")
+                                            .setPositiveButton("Dismiss", null)
+                                            .show()
+                                        return@observe
                                     }
-                                }else{
-                                    AlertDialog.Builder(context)
-                                        .setIcon(R.drawable.ic_error)
-                                        .setTitle("Error")
-                                        .setMessage("Code is no found")
-                                        .setPositiveButton("Dismiss", null)
-                                        .show()
-                                    return@observe
+
                                 }
+                            }else{
+                                AlertDialog.Builder(context)
+                                    .setIcon(R.drawable.ic_error)
+                                    .setTitle("Error")
+                                    .setMessage("Code is no found")
+                                    .setPositiveButton("Dismiss", null)
+                                    .show()
+                                return@observe
+                            }
                         }
                     }else{
                         AlertDialog.Builder(context)
@@ -198,8 +234,10 @@ class CartListFragment : Fragment() {
                     }
 
 //                binding.txtCount.text = formatter.format(total)
-                Log.d("lol",total.toString())
+                    Log.d("lol",total.toString())
+                }
             }
+
         }
 
         return binding.root

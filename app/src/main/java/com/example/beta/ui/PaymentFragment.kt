@@ -32,6 +32,7 @@ class PaymentFragment : Fragment() {
     private val voucherName by lazy { requireArguments().getString("voucher name") ?: ""}
     private val voucherId by lazy { requireArguments().getString("voucherId") ?: ""}
     private val code by lazy { requireArguments().getString("code") ?: ""}
+    private val address by lazy { requireArguments().getString("address") ?: ""}
     private val vm: CartViewModel by activityViewModels()
     private val voucherUsed: VoucherUsedViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
@@ -151,6 +152,7 @@ class PaymentFragment : Fragment() {
             tax = 6,
             voucherName = voucherName,
             voucherValue = voucher,
+            address = address,
             progress = 0,
         )
 

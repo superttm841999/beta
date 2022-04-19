@@ -23,6 +23,10 @@ class AddressViewModel(username: String): ViewModel(){
 
     fun getAll() = addresses.value
 
+    fun getDefaultAtFirst(): List<Address>? {
+        return addresses.value?.sortedByDescending { it.default }
+    }
+
     fun getAddressDetail(id: String): Address? {
         return addresses.value?.find{ f -> f.id == id }
     }
