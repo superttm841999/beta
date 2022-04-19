@@ -111,6 +111,10 @@ class LoginFragment : Fragment() {
             nav.navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
+        binding.forgotPwdBtn.setOnClickListener {
+            nav.navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
+
         binding.loginBtn.setOnClickListener {
 
             var username = binding.usernameTextInput.text.toString().trim()

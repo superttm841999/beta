@@ -91,6 +91,18 @@ class AccountFragment : Fragment() {
             nav.navigate(R.id.orderHistoryListFragment)
         }
 
+        binding.btnEditProfile.setOnClickListener {
+            nav.navigate(R.id.accountProfileFragment)
+        }
+
+        binding.btnChangePassword.setOnClickListener {
+            nav.navigate(R.id.accountChangePasswordFragment)
+        }
+
+        binding.btnAddress.setOnClickListener {
+            nav.navigate(R.id.addressListFragment)
+        }
+
         return binding.root
     }
 }

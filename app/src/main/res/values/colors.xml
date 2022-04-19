@@ -19,4 +19,7 @@
     <color name="sysTransparent">#00000000</color>
     <color name="sysWhite">#FFFFFFFF</color>
     <color name="sysYellow">#FFFFFF00</color>
+    <color name="Red">#c8232c</color>
+    <color name="Blue">#1a73e8</color>
+    <color name="Green">#32CD32</color>
 </resources>

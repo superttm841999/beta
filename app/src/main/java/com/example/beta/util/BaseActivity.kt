@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.beta.R
+import com.example.beta.address.AddressViewModel
+import com.example.beta.address.AddressViewModelFactory
 import com.example.beta.login.*
 import com.google.firebase.firestore.Blob
 import com.google.firebase.firestore.ktx.firestore
@@ -17,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 open class BaseActivity: AppCompatActivity() {
     private val userDb by lazy { Firebase.firestore.collection("Users")}
     private lateinit var loginViewModel: LoginViewModel
-    //private lateinit var addressViewModel: AddressViewModel
+    private lateinit var addressViewModel: AddressViewModel
     private val login = LoginRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,14 +75,7 @@ open class BaseActivity: AppCompatActivity() {
             })
 
             //track address
-           // addressViewModel = ViewModelProvider(this, AddressViewModelFactory(user.id)).get(AddressViewModel::class.java)
-
-
-
-
-
-
-
+            addressViewModel = ViewModelProvider(this, AddressViewModelFactory(user.id)).get(AddressViewModel::class.java)
         }
     }
 

@@ -48,6 +48,26 @@ class LoginRepository() {
         return result.documents.size == 0
     }
 
+    suspend fun getEmailByUsername(username: String): MutableMap<String?, Any?> {
+        val collection = "Users"
+        val result = db.collection(collection)
+            .whereEqualTo("username", username)
+            .get()
+            .await()
+
+        val id = result?.documents?.get(0)?.id
+        val username = result?.documents?.get(0)?.get("username")
+        val email = result?.documents?.get(0)?.get("email")
+        val valid = result.documents.size != 0
+
+        return mutableMapOf(
+            "valid" to valid,
+            "id" to id,
+            "username" to username,
+            "email" to email
+        )
+    }
+
     suspend fun signUp(username: String, name: String, email: String, password: String): String {
         val collection = "Users"
         var user = mutableMapOf<String, Any>(

@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.1" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/drawable/ic_baseline_phone_24.xml" value="0.1" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/drawable/ic_image_black.xml" value="0.146" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/address_item.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/fragment_account.xml" value="0.25" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/fragment_address_add.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/fragment_payment.xml" value="0.17028985507246377" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/fragment_seller.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/login_nav_graph.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_account.xml" value="0.33" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_cart_list.xml" value="0.33" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_done_order.xml" value="0.20416666666666666" />

@@ -57,53 +57,61 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/pwdTextInputLayout">
 
-        <Button
-            android:id="@+id/loginBtn"
-            style="?attr/materialButtonOutlinedStyle"
+        <LinearLayout
+            android:id="@+id/layoutBelow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_centerHorizontal="true"
-            android:text="Sign In"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            >
 
-        <Button
-            android:id="@+id/registerBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:layout_toRightOf="@id/loginBtn"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="Sign Up FOR FREE"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+            <Button
+                android:id="@+id/registerBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="Sign Up"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign In" />
+
+
+        </LinearLayout>
+
 
         <CheckBox
             android:id="@+id/rmbLoginChk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remember Me"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerBtn" />
+            android:layout_below="@id/layoutBelow"
+            android:layout_centerHorizontal="true"
+            android:text="Remember Me" />
 
-        <TextView
-            android:id="@+id/textView2"
+        <Button
+            android:id="@+id/forgotPwdBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:text="Don't have an account?"
-            app:layout_constraintBottom_toTopOf="@+id/rmbLoginChk"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_below="@id/rmbLoginChk"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="Forgot Password?"
+            android:textColor="@color/Blue" />
+
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

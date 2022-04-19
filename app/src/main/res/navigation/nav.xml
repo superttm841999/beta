@@ -110,4 +110,27 @@
         android:name="com.example.beta.ui.DoneOrderDetailFragment"
         android:label="详细资料"
         tools:layout="@layout/fragment_done_order_detail" />
+    <fragment
+        android:id="@+id/accountProfileFragment"
+        android:name="com.example.beta.ui.AccountProfileFragment"
+        android:label="fragment_account_profile"
+        tools:layout="@layout/fragment_account_profile" />
+    <fragment
+        android:id="@+id/accountChangePasswordFragment"
+        android:name="com.example.beta.ui.AccountChangePasswordFragment"
+        android:label="fragment_account_change_password"
+        tools:layout="@layout/fragment_account_change_password" />
+    <fragment
+        android:id="@+id/addressListFragment"
+        android:name="com.example.beta.address.AddressListFragment"
+        android:label="fragment_address_list"
+        tools:layout="@layout/fragment_address_list" />
+    <fragment
+        android:id="@+id/addressAddFragment3"
+        android:name="com.example.beta.address.AddressAddFragment"
+        android:label="AddressAddFragment" />
+    <fragment
+        android:id="@+id/addressUpdateFragment2"
+        android:name="com.example.beta.address.AddressUpdateFragment"
+        android:label="AddressUpdateFragment" />
 </navigation>

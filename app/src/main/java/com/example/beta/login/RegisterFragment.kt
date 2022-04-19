@@ -1,5 +1,6 @@
 package com.example.beta.login
 
+import android.Manifest
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,7 @@ import com.example.beta.databinding.FragmentRegisterBinding
 import com.example.beta.util.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.permissionx.guolindev.PermissionX
 import kotlinx.coroutines.runBlocking
 
 class RegisterFragment : Fragment() {
@@ -30,11 +33,18 @@ class RegisterFragment : Fragment() {
     private val model: LoginViewModel by activityViewModels()
     private val login = LoginRepository()
     private val userDb by lazy { Firebase.firestore.collection("Users")}
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            binding.image.setImageURI(it.data?.data)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
 
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
@@ -97,7 +107,7 @@ class RegisterFragment : Fragment() {
             afterTextChanged = {
                 directClick = false
                 when{
-                    isEmptyString(name.text.toString()) -> {
+                    isEmptyString(name.text.toString())-> {
                         nameLayout.error = validationItemMsg["name"].toString()
                         validationItem["name"] = false
                     }
@@ -113,7 +123,7 @@ class RegisterFragment : Fragment() {
             afterTextChanged = {
                 directClick = false
                 when{
-                    isEmptyString(email.text.toString()) -> {
+                    isEmptyString(email.text.toString())-> {
                         emailLayout.error = validationItemMsg["email"].toString()
                         validationItem["email"]=false
                     }
@@ -198,15 +208,35 @@ class RegisterFragment : Fragment() {
         )
 
         binding.galleryBtn.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.addCategory(Intent.CATEGORY_OPENABLE)
+//            intent.type = "image/*"
+//            getGalleryImage.launch(intent)
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
-            getGalleryImage.launch(intent)
+            launcher.launch(intent)
         }
 
         binding.cameraBtn.setOnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            getCameraImage.launch(intent)
+            PermissionX.init(this)
+                .permissions(Manifest.permission.CAMERA)
+                .onExplainRequestReason { scope, deniedList ->
+                    scope.showRequestReasonDialog(
+                        deniedList,
+                        "Please give permission to open your camera",
+                        "OK",
+                        "Cancel"
+                    )
+                }
+                .request { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+//                      activity?.let { it -> "Permission granted".showToast(it) }
+                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        getCameraImage.launch(intent)
+                    } else {
+                        activity?.let { it -> "Disable to open camera because no permission".showToast(it) }
+                    }
+                }
         }
 
         var signUpBtn = binding.signUpBtn
@@ -282,6 +312,7 @@ class RegisterFragment : Fragment() {
             it.data?.let{ it ->
                 it.data?.let{
                     val bitmap = getBitMapFromUri(it)
+                    Log.d("haha", bitmap.toString())
                     binding.image.setImageBitmap(bitmap)
                 }
             }
@@ -301,7 +332,7 @@ class RegisterFragment : Fragment() {
         val contentResolver: ContentResolver? = activity?.contentResolver
         var bitmap: Bitmap? = null
         bitmap = if(Build.VERSION.SDK_INT < 28){
-            MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
         }else{
             val source = contentResolver?.let { ImageDecoder.createSource(it, uri) }
             source?.let{
