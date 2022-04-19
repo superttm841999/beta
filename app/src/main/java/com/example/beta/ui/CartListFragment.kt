@@ -41,7 +41,7 @@ class CartListFragment : Fragment() {
     private val date = Date()
     private val model: LoginViewModel by activityViewModels()
 
-    private val format = SimpleDateFormat("yyyyMMdd")
+    private val format = SimpleDateFormat("yyyy/MM/dd")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCartListBinding.inflate(inflater, container, false)
 
