@@ -133,4 +133,9 @@
         android:id="@+id/addressUpdateFragment2"
         android:name="com.example.beta.address.AddressUpdateFragment"
         android:label="AddressUpdateFragment" />
+    <fragment
+        android:id="@+id/profileFoodFragment"
+        android:name="com.example.beta.ui.ProfileFoodFragment"
+        android:label="Shop Profile"
+        tools:layout="@layout/fragment_profile_food" />
 </navigation>

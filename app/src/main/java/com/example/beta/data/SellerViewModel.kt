@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
@@ -35,6 +36,19 @@ class SellerViewModel : ViewModel() {
         return forms.value?.find{ f -> f.docId == docId }
     }
 
+    suspend fun getUsername(username:String): Seller?{
+        var seller =col.get().await().toObjects<Seller>()
+
+        for(s in seller){
+            if(s.username == username){
+                return forms.value?.find{ f -> f.docId == s.docId }
+            }
+        }
+        return forms.value?.find{ f -> f.username == username }
+    }
+
+
+
     fun getName(name: String): Seller? {
         return forms.value?.find{ f -> f.name == name }
     }
@@ -52,6 +66,7 @@ class SellerViewModel : ViewModel() {
     fun set(f: Seller) {
         col.document(f.docId).set(f)
     }
+
 
     private fun idExists(id: String): Boolean {
         return forms.value?.any{ f -> f.docId == id} ?: false
@@ -81,11 +96,13 @@ class SellerViewModel : ViewModel() {
             else if (idExists(f.docId)) "- Id is duplicated.\n"
             else if (f.docId == "1001") "- Please submit again if only Id got problem.\n"
             else ""
+
+            e += if (nameExists(f.name)) "- Name is duplicated.\n"
+            else ""
         }
 
         e += if (f.name == "") "- Name is required.\n"
         else if (f.name.length < 3) "- Name is too short.\n"
-        else if (nameExists(f.name)) "- Name is duplicated.\n"
         else ""
 
         e += if (f.logo.toBytes().isEmpty()) "- Photo is required.\n"

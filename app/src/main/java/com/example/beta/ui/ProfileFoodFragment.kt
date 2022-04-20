@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.beta.R
@@ -17,22 +18,27 @@ import com.example.beta.data.Category
 import com.example.beta.data.Count
 import com.example.beta.data.Seller
 import com.example.beta.data.SellerViewModel
-import com.example.beta.databinding.FragmentSellerFormBinding
+import com.example.beta.databinding.FragmentProfileFoodBinding
 import com.example.beta.login.LoginViewModel
 import com.example.beta.util.cropToBlob
 import com.example.beta.util.errorDialog
 import com.example.beta.util.successDialog
+import com.example.beta.util.toBitmap
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
 
-class SellerFormFragment : Fragment() {
 
-    private lateinit var binding:FragmentSellerFormBinding
-    private val nav by lazy { findNavController() }
-    private val vm: SellerViewModel by activityViewModels()
+class ProfileFoodFragment : Fragment() {
+
+    private lateinit var binding:FragmentProfileFoodBinding
     private val model: LoginViewModel by activityViewModels()
+    private val vm: SellerViewModel by activityViewModels()
+    private val nav by lazy { findNavController() }
+    private var name = ArrayList<String>()
+    private val id by lazy { requireArguments().getString("id") ?: "" }
+
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
@@ -42,9 +48,10 @@ class SellerFormFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = FragmentSellerFormBinding.inflate(inflater,container,false)
+        binding = FragmentProfileFoodBinding.inflate(inflater,container,false)
 
-        var name = ArrayList<String>()
+
+
 
         Firebase.firestore
             .collection("Category")
@@ -61,31 +68,43 @@ class SellerFormFragment : Fragment() {
                 }
             }
         name.add("--SELECT--")
-        Log.d("check",name.toString())
 
         val arrayAdapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item,name)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spnCat.adapter = arrayAdapter
 
         binding.edtUsername.text = model.user.value!!.username
+
         reset()
         binding.imgPhoto.setOnClickListener { select() }
         binding.btnReset.setOnClickListener { reset() }
         binding.btnSubmit.setOnClickListener { runBlocking { submit() } }
-        binding.btnBack.setOnClickListener { nav.navigate(R.id.accountFragment) }
+
+
 
         return binding.root
     }
 
-    private fun reset() {
-        binding.edtName.text.clear()
-        binding.edtAddress.text.clear()
-        binding.edtOpen.text.clear()
-        binding.edtClose.text.clear()
-        binding.edtAddress.text.clear()
-        binding.imgPhoto.setImageDrawable(null)
-        binding.spnCat.setSelection(0)
-        binding.edtName.requestFocus()
+    private  fun reset() {
+        Firebase.firestore
+            .collection("Seller")
+            .get()
+            .addOnSuccessListener { snap ->
+                val list = snap.toObjects<Seller>()
+                var count = 1
+
+                list.forEach{ f->
+                    if(f.docId == id){
+                        binding.edtName.setText(f.name)
+                        binding.edtAddress.setText(f.address)
+                        binding.edtOpen.setText(f.open)
+                        binding.edtClose.setText(f.close)
+                        binding.imgPhoto.setImageBitmap(f.logo.toBitmap())
+                        setCategory(f.category)
+                        binding.edtName.requestFocus()
+                    }
+                }
+            }
     }
 
     private fun select() {
@@ -94,46 +113,59 @@ class SellerFormFragment : Fragment() {
         launcher.launch(intent)
     }
 
+    private fun setCategory(cat:String){
+        Firebase.firestore
+            .collection("Category")
+            .get()
+            .addOnSuccessListener { snap ->
+                val list = snap.toObjects<Category>()
+                var count = 1
+
+                Log.d("caofeng1",name.toString())
+                list.forEach{ f->
+                   if(f.status == "Published"){
+                       if(f.name == cat){
+                           binding.spnCat.setSelection(count)
+                           Log.d("caofeng",count.toString())
+                       }
+                       Log.d("caofeng",count.toString())
+                       count++
+                   }
+
+
+                }
+            }
+    }
+
     private suspend fun submit() {
-        val c = vm.getCount("CountApprovalForm")
-        var count = c?.toInt()
-        count = count?.plus(1000 + 1)
-
-        Log.d("count",count.toString())
-
         val s = Seller(
-            docId = count.toString(),
+            docId = id,
             name = binding.edtName.text.toString().trim(),
-            username = model.user.value!!.username,
-            status = 0,
             logo = binding.imgPhoto.cropToBlob(300,300),
             category = binding.spnCat.selectedItem.toString(),
             address = binding.edtAddress.text.toString().trim(),
-            userId = model.user.value!!.id,
-            open = binding.edtOpen.text.toString().trim(),
-            close = binding.edtClose.text.toString().trim(),
+
+            )
+
+        var shop = mutableMapOf<String, Any>(
+            "name" to binding.edtName.text.toString().trim(),
+            "logo" to binding.imgPhoto.cropToBlob(300,300),
+            "category" to binding.spnCat.selectedItem.toString(),
+            "address" to binding.edtAddress.text.toString().trim(),
+            "open" to binding.edtOpen.text.toString().trim(),
+            "close" to binding.edtClose.text.toString().trim(),
         )
 
-        val err = vm.validate(s)
+        val err = vm.validate(s,false)
         if(err != ""){
             errorDialog(err)
             return
         }
-        var setCount = count?.minus(1000)
-        var f = setCount?.let {
-            Count(
-                docId = "CountApprovalForm",
-                count = it
-            )
-        }
-        vm.set(s)
-        if (f != null) {
-            vm.setCount(f)
-        }
-        successDialog("Application Submitted")
-        nav.navigateUp()
+
+        Firebase.firestore.collection("Seller").document(id).update(shop)
+
+        successDialog("Shop Profile Updated")
+        nav.navigate(R.id.sellerFragment,bundleOf("id" to id))
 
     }
-
-
 }

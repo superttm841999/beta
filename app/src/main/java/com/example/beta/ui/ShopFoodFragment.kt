@@ -27,9 +27,9 @@ class ShopFoodFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        val adapter = ShopListAdapter() { holder, category ->
+        val adapter = ShopListAdapter() { holder, shop ->
             holder.root.setOnClickListener {
-                nav.navigate(R.id.foodListFragment, bundleOf("id" to category.docId,"shop" to category.name))
+                nav.navigate(R.id.foodListFragment, bundleOf("id" to shop.docId,"shop" to shop.name))
             }
         }
         binding.rv.adapter = adapter

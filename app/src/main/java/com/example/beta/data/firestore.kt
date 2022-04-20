@@ -36,7 +36,9 @@ data class Seller(
     var category : String = "",
     var approvalUser : String = "",
     var approvalName : String = "",
-    var approvalEmail : String = ""
+    var approvalEmail : String = "",
+    var open : String = "",
+    var close : String = "",
 ){
     @get:Exclude
     var count: Int = 0

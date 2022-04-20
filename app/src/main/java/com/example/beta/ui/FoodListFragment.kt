@@ -37,8 +37,9 @@ class FoodListFragment : Fragment() {
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         lifecycleScope.launch {
-            val category = vm.get(id)!!
-            binding.txtName.text = "${category.name}"
+            val shop = vm.get(id)!!
+            binding.txtName.text = "${shop.name}"
+            binding.txtAddress.text = "📍 ${shop.address}"
 
             val foods = vm.getFoods(id)
             adapter.submitList(foods)

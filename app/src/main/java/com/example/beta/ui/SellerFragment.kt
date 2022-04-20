@@ -24,7 +24,7 @@ class SellerFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        binding.txtZhengTong.text = "我们的执行长，帅气的郑彤再次欢迎您， 用户 @${model.user.value!!.username}@ 😀, 希望您有良好的体验。"
+        binding.txtZhengTong.text = "征彤再次欢迎您，用户 ${model.user.value!!.username}"
 
         return binding.root
     }
@@ -38,6 +38,7 @@ class SellerFragment : Fragment() {
         when (item.itemId){
             R.id.sellerFoodFragment -> nav.navigate(R.id.sellerFoodFragment,bundleOf("shopName" to shopName, "id" to id))
             R.id.orderListFragment -> nav.navigate(R.id.orderListFragment, bundleOf("id" to id))
+            R.id.profileFoodFragment -> nav.navigate(R.id.profileFoodFragment, bundleOf("id" to id))
         }
         return super.onOptionsItemSelected(item)
     }
