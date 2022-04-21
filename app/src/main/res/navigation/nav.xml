@@ -138,4 +138,9 @@
         android:name="com.example.beta.ui.ProfileFoodFragment"
         android:label="Shop Profile"
         tools:layout="@layout/fragment_profile_food" />
+    <fragment
+        android:id="@+id/voucherFragment"
+        android:name="com.example.beta.ui.VoucherFragment"
+        android:label="Voucher List"
+        tools:layout="@layout/fragment_voucher" />
 </navigation>

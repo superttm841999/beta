@@ -21,6 +21,21 @@ class VoucherUsedViewModel : ViewModel() {
     private val vouchers = MutableLiveData<List<VoucherUsed>>()
     private val counts = MutableLiveData<List<Count>>()
 
+    private var voucherL = listOf<VoucherUsed>()
+    var voucherList = MutableLiveData<List<VoucherUsed>>()
+
+    init {
+
+        viewModelScope.launch {
+            col.addSnapshotListener { snap, _ -> voucherList.value = snap?.toObjects()
+                voucherL = snap!!.toObjects()
+                runBlocking {
+                    //updateResult()
+                }
+            }
+        }
+    }
+
 
     init {
         col.addSnapshotListener { snap, _ -> vouchers.value = snap?.toObjects() }

@@ -24,7 +24,7 @@ class SellerFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        binding.txtZhengTong.text = "征彤再次欢迎您，用户 ${model.user.value!!.username}"
+        binding.txtZhengTong.text = "Welcome Back, user ${model.user.value!!.username}"
 
         return binding.root
     }

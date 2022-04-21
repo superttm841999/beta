@@ -1,5 +1,6 @@
 package com.example.beta.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
@@ -14,6 +15,8 @@ import com.example.beta.data.SellerViewModel
 import com.example.beta.databinding.FragmentShopFoodBinding
 import com.example.beta.util.ShopListAdapter
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ShopFoodFragment : Fragment() {
@@ -28,20 +31,32 @@ class ShopFoodFragment : Fragment() {
         setHasOptionsMenu(true)
 
         val adapter = ShopListAdapter() { holder, shop ->
+
+
             holder.root.setOnClickListener {
-                nav.navigate(R.id.foodListFragment, bundleOf("id" to shop.docId,"shop" to shop.name))
+                    if (holder.txtShopStatus.text == "OPEN") {
+                        nav.navigate(R.id.foodListFragment, bundleOf("id" to shop.docId,"shop" to shop.name))
+                    }else{
+                        AlertDialog.Builder(context)
+                            .setIcon(R.drawable.ic_error)
+                            .setTitle("Error")
+                            .setMessage("The shop is closed :(")
+                            .setPositiveButton("Dismiss", null)
+                            .show()
+                        nav.navigate(R.id.shopFoodFragment)
+                    }
             }
         }
         binding.rv.adapter = adapter
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
+        vm.sellerList.observe(viewLifecycleOwner){ list ->
 
-        lifecycleScope.launch{
-            var application = vm.getAll()
-            adapter.submitList(application)
+            adapter.submitList(list)
+            binding.txtCount.text = "${list.size} Shop(s)"
 
-            binding.txtCount.text = "${application.size} Shop(s)"
         }
+
 
         binding.fabCart.setOnClickListener { nav.navigate(R.id.cartListFragment) }
 

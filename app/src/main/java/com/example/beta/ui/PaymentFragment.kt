@@ -53,7 +53,7 @@ class PaymentFragment : Fragment() {
             adapter.submitList(carts)
         }
 
-
+        binding.txtAddress.text = "📍 ${address}"
 
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 

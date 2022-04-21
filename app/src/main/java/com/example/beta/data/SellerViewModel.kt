@@ -89,6 +89,7 @@ class SellerViewModel : ViewModel() {
 
     fun validate(f: Seller, insert: Boolean = true): String {
         var e = ""
+        var regexTime = Regex("^[0-9]{4}$")
 
         if (insert) {
             e += if (f.docId == "") "- Id is required.\n"
@@ -113,6 +114,14 @@ class SellerViewModel : ViewModel() {
 
         e += if (f.address == "") "- Address is required.\n"
         else if (f.address.length < 10) "- Address is too short.\n"
+        else ""
+
+        e += if (f.open == "") "- Open Time is required.\n"
+        else if (f.open.matches(regexTime)) "- Open Time format is invalid.\n"
+        else ""
+
+        e += if (f.open == "") "- Close Time is required.\n"
+        else if (f.open.matches(regexTime)) "- Close Time format is invalid.\n"
         else ""
 
         return e

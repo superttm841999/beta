@@ -103,6 +103,10 @@ class AccountFragment : Fragment() {
             nav.navigate(R.id.addressListFragment)
         }
 
+        binding.btnVoucher.setOnClickListener {
+            nav.navigate(R.id.voucherFragment)
+        }
+
         return binding.root
     }
 }

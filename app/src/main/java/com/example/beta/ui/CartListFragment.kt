@@ -172,10 +172,7 @@ class CartListFragment : Fragment() {
                             if(err == true && vvv.status == 1 ){
                                 if (cmp != null && cmpEnd !=null) {
                                     if(cmp >= 0 && cmpEnd <= 0){
-                                        Firebase.firestore.collection("VoucherUsed").get().addOnSuccessListener {
-                                                snap ->
-                                            val list = snap.toObjects<VoucherUsed>()
-
+                                        voucherUsed.voucherList.observe(viewLifecycleOwner){ list ->
                                             list.forEach { f->
                                                 if(f.voucherId == getId && f.username == model.user.value!!.username){
                                                     AlertDialog.Builder(context)
@@ -187,7 +184,6 @@ class CartListFragment : Fragment() {
                                                     nav.navigateUp()
                                                 }
                                             }
-
                                         }
                                         for(c in carts){
                                             total += (c.price * c.count)
