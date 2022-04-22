@@ -65,7 +65,7 @@ class PendingOrderDetailFragment : Fragment() {
         binding.btnAccept.setOnClickListener {
             var order = mutableMapOf<String, Any>(
                 "status" to 1,
-                "progress" to 1,
+                "progress" to 0,
             )
 
             Firebase.firestore.collection("Order").document(orderId).update(order)

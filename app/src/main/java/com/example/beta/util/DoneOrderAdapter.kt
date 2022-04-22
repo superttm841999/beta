@@ -54,7 +54,7 @@ class DoneOrderAdapter (
             val list = snap.toObjects<Seller>()
             list.forEach { l ->
                 if(l.docId == order.sellerId){
-                    if(order.progress == 2){
+                    if(order.progress == 2 || order.progress == 3){
                         holder.imgLogo.setImageBitmap(l.logo.toBitmap())
                         holder.txtName.text  = l.name
                         var status = when(order.status){

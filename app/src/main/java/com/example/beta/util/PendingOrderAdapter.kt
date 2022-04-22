@@ -54,7 +54,7 @@ class PendingOrderAdapter(
             val list = snap.toObjects<Seller>()
             list.forEach { l ->
                 if(l.docId == order.sellerId){
-                    if(order.status == 0 && order.progress == 0){
+                    if(order.status == 0 && order.progress == 10){
                         holder.imgLogo.setImageBitmap(l.logo.toBitmap())
                         holder.txtName.text  = l.name
                         var status = when(order.status){

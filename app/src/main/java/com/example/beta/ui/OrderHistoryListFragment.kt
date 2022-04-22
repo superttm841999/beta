@@ -39,12 +39,13 @@ class OrderHistoryListFragment : Fragment() {
         binding.rv.adapter = adapter
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
-        lifecycleScope.launch{
-            var orders = vm.getAllAdmin(model.user.value!!.id)
-            adapter.submitList(orders)
+        vm.setUserId(model.user.value!!.id)
+        vm.orderUserList.observe(viewLifecycleOwner){ list ->
+            adapter.submitList(list)
+            binding.txtCount.text = "${list.size} record(s)"
 
-            binding.txtCount.text = "${orders.size} Order(s)"
         }
+
 
         return binding.root
     }

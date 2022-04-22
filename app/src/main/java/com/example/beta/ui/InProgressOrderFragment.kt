@@ -38,7 +38,7 @@ class InProgressOrderFragment : Fragment() {
 
         binding.rv.adapter = adapter
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        vm.setSellerId(id,1,1)
+        vm.setSellerId(id,0,1)
 
         vm.orderList.observe(viewLifecycleOwner){ list ->
 

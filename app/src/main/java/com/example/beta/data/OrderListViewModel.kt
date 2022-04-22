@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
@@ -16,13 +17,28 @@ class OrderListViewModel: ViewModel() {
     private var sellerId = ""
     private var progress = 0
     private var status = 0
+    private var userId = ""
     private val col = Firebase.firestore.collection("OrderFood")
     private val orderDetail = MutableLiveData<List<OrderFood>>()
     private var orderL = listOf<Order>()
     var orderList = MutableLiveData<List<Order>>()
 
+    private var orderUserL = listOf<Order>()
+    var orderUserList = MutableLiveData<List<Order>>()
+
     init {
         col.addSnapshotListener { snap, _ -> orderDetail.value = snap?.toObjects() }
+    }
+
+    init {
+        viewModelScope.launch {
+            ORDERS.addSnapshotListener { snap, _ -> orderUserList.value = snap?.toObjects()
+                orderUserL = snap!!.toObjects()
+                runBlocking {
+                    updateUserResult()
+                }
+            }
+        }
     }
 
     init {
@@ -52,14 +68,41 @@ class OrderListViewModel: ViewModel() {
         runBlocking { updateResultWithoutStatus() }
     }
 
-    suspend fun updateResultWithoutStatus(){
-        var list = orderL.filter {
-            it.sellerId == this.sellerId && it.progress == this.progress
+    fun setUserId(userId: String){
+        this.userId = userId
+        runBlocking { updateUserResult() }
+    }
+
+    suspend fun updateUserResult(){
+        var list = orderUserL.filter {
+           it.userId == this.userId
         }
 
         for(l in list){
             l.count = ORDER_DETAIL.whereEqualTo("orderId", l.docId).get().await().size()
         }
+
+        val reverse = true
+        list.sortedBy { f->f.docId }
+        if(reverse)
+            list = list.reversed()
+
+        orderUserList.value = list
+    }
+
+    suspend fun updateResultWithoutStatus(){
+        var list = orderL.filter {
+            it.sellerId == this.sellerId && (it.progress == this.progress || it.progress == 3)
+        }
+
+        for(l in list){
+            l.count = ORDER_DETAIL.whereEqualTo("orderId", l.docId).get().await().size()
+        }
+
+        val reverse = true
+        list.sortedBy { f->f.docId }
+        if(reverse)
+            list = list.reversed()
 
         orderList.value = list
     }
@@ -70,6 +113,11 @@ class OrderListViewModel: ViewModel() {
         }
         orderList.value = list
         Log.d("iddddddd", orderList.value.toString())
+
+        val reverse = true
+        list.sortedBy { f->f.docId }
+        if(reverse)
+            list = list.reversed()
 
         orderList.value = list
     }

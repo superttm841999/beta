@@ -36,6 +36,7 @@ class DoneOrderFragment : Fragment() {
 
         binding.rv.adapter = adapter
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
         vm.setSellerIdWithoutStatus(id,2)
 
         vm.orderList.observe(viewLifecycleOwner){ list ->

@@ -39,7 +39,7 @@ class PendingOrderFragment : Fragment() {
 
         binding.rv.adapter = adapter
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        vm.setSellerId(id,0,0)
+        vm.setSellerId(id,10,0)
 
         vm.orderList.observe(viewLifecycleOwner){ list ->
 

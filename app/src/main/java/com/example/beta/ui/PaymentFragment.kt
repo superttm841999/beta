@@ -153,7 +153,7 @@ class PaymentFragment : Fragment() {
             voucherName = voucherName,
             voucherValue = voucher,
             address = address,
-            progress = 0,
+            progress = 10,
         )
 
         runBlocking { addToOrderFood(count!!) }

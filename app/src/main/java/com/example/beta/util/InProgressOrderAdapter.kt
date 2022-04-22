@@ -54,7 +54,7 @@ class InProgressOrderAdapter (
             val list = snap.toObjects<Seller>()
             list.forEach { l ->
                 if(l.docId == order.sellerId){
-                    if(order.status == 1 && order.progress == 1){
+                    if(order.status == 1 && (order.progress == 0)){
                         holder.imgLogo.setImageBitmap(l.logo.toBitmap())
                         holder.txtName.text  = l.name
                         var status = when(order.status){
