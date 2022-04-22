@@ -143,4 +143,9 @@
         android:name="com.example.beta.ui.VoucherFragment"
         android:label="Voucher List"
         tools:layout="@layout/fragment_voucher" />
+    <fragment
+        android:id="@+id/shopCartFragment"
+        android:name="com.example.beta.ui.ShopCartFragment"
+        android:label="Shop Cart"
+        tools:layout="@layout/fragment_shop_cart" />
 </navigation>

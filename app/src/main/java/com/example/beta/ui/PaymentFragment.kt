@@ -165,6 +165,8 @@ class PaymentFragment : Fragment() {
 
         if(shop.isNotEmpty()){
             vm.deleteShop(shop,model.user.value!!.username)
+            vm.getShopDelete(shop)
+
         }
 
         successDialog("Make payment successfully")

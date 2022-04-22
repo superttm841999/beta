@@ -23,6 +23,7 @@ class FoodDetailFragment : Fragment() {
     private val vm: SellerListAdminViewModel by activityViewModels()
 
     private val id by lazy { requireArguments().getString("id") ?: "" }
+    private val shopId by lazy { requireArguments().getString("shopId") ?: "" }
     private val shop by lazy { requireArguments().getString("shop") ?: "" }
     private val formatter = DecimalFormat("0.00")
     private val cvm: CartViewModel by activityViewModels()
@@ -68,13 +69,19 @@ class FoodDetailFragment : Fragment() {
             username = model.user.value!!.username
         )
 
+        val s = Shop(
+            id = shopId,
+            name = shop
+        )
+
         val err = cvm.validate(c)
         if(err != ""){
             errorDialog(err)
             return
         }
         cvm.insert(c)
-        nav.navigate(R.id.cartListFragment)
+        cvm.insertShop(s)
+        nav.navigate(R.id.shopCartFragment)
     }
 
     private fun read() {

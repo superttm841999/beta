@@ -43,7 +43,7 @@ class ShopFoodFragment : Fragment() {
                             .setMessage("The shop is closed :(")
                             .setPositiveButton("Dismiss", null)
                             .show()
-                        nav.navigate(R.id.shopFoodFragment)
+
                     }
             }
         }
@@ -58,7 +58,7 @@ class ShopFoodFragment : Fragment() {
         }
 
 
-        binding.fabCart.setOnClickListener { nav.navigate(R.id.cartListFragment) }
+        binding.fabCart.setOnClickListener { nav.navigate(R.id.shopCartFragment) }
 
         return binding.root
     }

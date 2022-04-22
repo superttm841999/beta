@@ -30,7 +30,7 @@ class FoodListFragment : Fragment() {
 
         val adapter = ShopFoodAdapter(){ holder, food ->
             holder.root.setOnClickListener {
-                nav.navigate(R.id.foodDetailFragment, bundleOf("id" to food.id,"shop" to shop))
+                nav.navigate(R.id.foodDetailFragment, bundleOf("id" to food.id,"shop" to shop,"shopId" to id))
             }
         }
         binding.rv.adapter = adapter
@@ -46,7 +46,7 @@ class FoodListFragment : Fragment() {
             binding.txtCount.text = "${foods.size} Food(s)"
         }
 
-        binding.fabCart.setOnClickListener { nav.navigate(R.id.cartListFragment) }
+        binding.fabCart.setOnClickListener { nav.navigate(R.id.shopCartFragment) }
 
         return binding.root
     }

@@ -116,13 +116,13 @@ class SellerViewModel : ViewModel() {
         else if (f.address.length < 10) "- Address is too short.\n"
         else ""
 
-        e += if (f.open == "") "- Open Time is required.\n"
-        else if (f.open.matches(regexTime)) "- Open Time format is invalid.\n"
-        else ""
-
-        e += if (f.open == "") "- Close Time is required.\n"
-        else if (f.open.matches(regexTime)) "- Close Time format is invalid.\n"
-        else ""
+//        e += if (f.open == "") "- Open Time is required.\n"
+//        else if (f.open.matches(regexTime)) "- Open Time format is invalid.\n"
+//        else ""
+//
+//        e += if (f.close == "") "- Close Time is required.\n"
+//        else if (f.close.matches(regexTime)) "- Close Time format is invalid.\n"
+//        else ""
 
         return e
     }

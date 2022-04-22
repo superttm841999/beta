@@ -32,9 +32,10 @@
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/divider4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_cart" />
 
     <Button
@@ -42,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="#D10A0A"
         android:text="Pay"
         app:layout_constraintEnd_toStartOf="@+id/btnDeleteAll"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +56,7 @@
         android:layout_marginTop="16dp"
         android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
 
     <TextView
         android:id="@+id/textView13"
@@ -86,37 +88,15 @@
         app:layout_constraintEnd_toStartOf="@+id/btnPay"
         app:layout_constraintTop_toTopOf="@+id/btnPay" />
 
-    <Spinner
-        android:id="@+id/spnShop"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBack" />
-
-    <Button
-        android:id="@+id/btnChange"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Show"
-        app:layout_constraintBottom_toBottomOf="@+id/spnShop"
-        app:layout_constraintStart_toEndOf="@+id/spnShop"
-        app:layout_constraintTop_toTopOf="@+id/spnShop" />
-
     <Button
         android:id="@+id/btnRefresh"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
         android:text="Refresh"
-        app:layout_constraintBottom_toBottomOf="@+id/btnChange"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnChange"
-        app:layout_constraintTop_toTopOf="@+id/btnChange" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDeleteAll" />
 
     <View
         android:id="@+id/divider4"
@@ -163,10 +143,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnRefresh"
+        app:layout_constraintEnd_toStartOf="@+id/btnRefresh"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnShop" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDeleteAll" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

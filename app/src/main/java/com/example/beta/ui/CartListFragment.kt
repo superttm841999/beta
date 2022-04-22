@@ -40,6 +40,7 @@ class CartListFragment : Fragment() {
     private val am: AddressViewModel by activityViewModels()
     private val voucherUsed: VoucherUsedViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
+    private val shop_name by lazy { requireArguments().getString("shop_name") ?: ""}
     private val date = Date()
     private val model: LoginViewModel by activityViewModels()
 
@@ -47,19 +48,26 @@ class CartListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCartListBinding.inflate(inflater, container, false)
 
-        var shop_name = ArrayList<String>()
-        shop_name.add("--SELECT--")
+        val vvv =  runBlocking {vc.get(binding.edtVoucher.text.toString())}
+        Log.d("try", runBlocking {vc.get(binding.edtVoucher.text.toString())}.toString())
 
-        vm.getAll(model.user.value!!.username).observe(viewLifecycleOwner){shop ->
-            for(s in shop){
-                shop_name.add(s.shop_name)
+        val getId = vvv?.docId
+        if(binding.edtVoucher.text.toString().isNotEmpty()){
+            voucherUsed.voucherList.observe(viewLifecycleOwner){ list ->
+                list.forEach { f->
+                    if(f.voucherId == getId && f.username == model.user.value!!.username){
+                        AlertDialog.Builder(context)
+                            .setIcon(R.drawable.ic_error)
+                            .setTitle("Error")
+                            .setMessage("You have used this code already")
+                            .setPositiveButton("Dismiss", null)
+                            .show()
+                        nav.navigateUp()
+                    }
+                }
             }
-            val arrayAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,shop_name.distinct())
-            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spnShop.adapter = arrayAdapter
-            //Log.d("checkb",shop_name.distinct().toString())
-
         }
+
 
 
         var address = ArrayList<String>()
@@ -89,8 +97,9 @@ class CartListFragment : Fragment() {
         val adapter = CartAdapter() { holder, f ->
             // holder.root.setOnClickListener      { nav.navigate(R.id.detailFragment, bundleOf("id" to f.id)) }
             holder.btnEdit.setOnClickListener   { nav.navigate(R.id.foodDetailFragment, bundleOf("id" to f.id,"shop" to f.shop_name) ) }
-            holder.btnDelete.setOnClickListener { vm.delete(f)
-                nav.navigate(R.id.cartListFragment)
+            holder.btnDelete.setOnClickListener {
+                vm.delete(f)
+                nav.navigate(R.id.shopCartFragment)
             }
         }
 
@@ -98,21 +107,20 @@ class CartListFragment : Fragment() {
         binding.btnRefresh.setOnClickListener {
             nav.navigate(R.id.cartListFragment)
         }
-        binding.btnChange.setOnClickListener {
-            if(binding.spnShop.selectedItem.toString() == "--SELECT--"){
-                nav.navigate(R.id.cartListFragment)
-            }
-            vm.getShop(binding.spnShop.selectedItem.toString(),model.user.value!!.username).observe(viewLifecycleOwner){carts ->
+
+            vm.getShop(shop_name,model.user.value!!.username).observe(viewLifecycleOwner){carts ->
                 adapter.submitList(carts)
             }
-        }
+
 
         binding.rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         binding.btnBack.setOnClickListener {
             nav.navigate(R.id.shopFoodFragment)
         }
-        binding.btnDeleteAll.setOnClickListener { vm.deleteAll() }
+        binding.btnDeleteAll.setOnClickListener { vm.deleteAll()
+        vm.deleteShopAll()
+        }
 
 
         var total = 0.00
@@ -127,7 +135,7 @@ class CartListFragment : Fragment() {
                     .show()
                 nav.navigate(R.id.addressAddFragment3)
             }else{
-                vm.getShop(binding.spnShop.selectedItem.toString(),model.user.value!!.username).observe(viewLifecycleOwner){carts ->
+                vm.getShop(shop_name,model.user.value!!.username).observe(viewLifecycleOwner){carts ->
                     val vvv =  runBlocking {vc.get(binding.edtVoucher.text.toString())}
                     Log.d("try", runBlocking {vc.get(binding.edtVoucher.text.toString())}.toString())
 
@@ -136,7 +144,6 @@ class CartListFragment : Fragment() {
                     val err = vvv?.let { it1 -> vc.validate(it1) }
                     Log.d("test",err.toString())
 
-                    if(binding.spnShop.selectedItem.toString()!= "--SELECT--"){
                         if(binding.edtVoucher.text.toString().isEmpty()){
 
                             for(c in carts){
@@ -144,7 +151,7 @@ class CartListFragment : Fragment() {
                             }
                             nav.navigate(R.id.paymentFragment,
                                 bundleOf("id" to total,
-                                    "shop" to binding.spnShop.selectedItem.toString(),
+                                    "shop" to shop_name,
                                     "voucher" to 0,
                                     "voucher name" to "No Voucher",
                                     "voucherId" to "No Id",
@@ -190,7 +197,7 @@ class CartListFragment : Fragment() {
                                         }
                                         nav.navigate(R.id.paymentFragment,
                                             bundleOf("id" to total,
-                                                "shop" to binding.spnShop.selectedItem.toString(),
+                                                "shop" to shop_name,
                                                 "voucher" to vvv?.value,
                                                 "voucher name" to vvv?.name,
                                                 "voucherId" to vvv?.docId,
@@ -219,15 +226,7 @@ class CartListFragment : Fragment() {
                                 return@observe
                             }
                         }
-                    }else{
-                        AlertDialog.Builder(context)
-                            .setIcon(R.drawable.ic_error)
-                            .setTitle("Error")
-                            .setMessage("Please select the shop")
-                            .setPositiveButton("Dismiss", null)
-                            .show()
-                        return@observe
-                    }
+
 
 //                binding.txtCount.text = formatter.format(total)
                     Log.d("lol",total.toString())

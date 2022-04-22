@@ -14,6 +14,7 @@
         <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/fragment_seller.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Acer/Documents/GitHub/beta/app/src/main/res/layout/login_nav_graph.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_account.xml" value="0.33" />
+        <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_address_update.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_cart_list.xml" value="0.33" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_done_order.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_done_order_detail.xml" value="0.20416666666666666" />
@@ -33,8 +34,9 @@
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_profile_food.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_seller.xml" value="0.33" />
-        <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_seller_food.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_seller_food.xml" value="0.22" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_seller_form.xml" value="0.33" />
+        <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_shop_cart.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_shop_food.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_update_food.xml" value="0.25" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/fragment_voucher.xml" value="0.22" />
@@ -44,6 +46,7 @@
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/item_order_history_list.xml" value="0.33" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/item_payment.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/item_seller_list.xml" value="0.33" />
+        <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/item_shop_cart.xml" value="0.25" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/layout/item_voucher_list.xml" value="0.33" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/menu/main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/OneDrive - Omesti Berhad/Documents/beta/app/src/main/res/menu/seller.xml" value="0.20416666666666666" />
