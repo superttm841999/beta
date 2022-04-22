@@ -58,10 +58,10 @@ class DoneOrderAdapter (
                         holder.imgLogo.setImageBitmap(l.logo.toBitmap())
                         holder.txtName.text  = l.name
                         var status = when(order.status){
-                            0 ->  "进行中"
-                            1 ->  "已接受"
-                            2 ->  "已拒绝"
-                            else ->  "啥玩意"
+                            0 ->  "Pending"
+                            1 ->  "Accepted"
+                            2 ->  "Rejected"
+                            else ->  "What?!"
                         }
                         holder.txtStatus.text  = status
                         when(order.status){
@@ -70,9 +70,9 @@ class DoneOrderAdapter (
                             2 -> holder.txtStatus.setTextColor(Color.parseColor("#FF0000"))
                             else -> ""
                         }
-                        holder.txtOrderId.text  = "产品ID # ${order.docId}"
+                        holder.txtOrderId.text  = "Order Id # ${order.docId}"
                         holder.txtTotal.text  = "RM ${formatter.format(order.payment)}"
-                        holder.txtCount.text = "- ${order.count} 产品"
+                        holder.txtCount.text = "- ${order.count} food(s)"
                         fn(holder, order)
                     }
                 }

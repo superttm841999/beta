@@ -70,7 +70,7 @@ class InProgressOrderDetailFragment : Fragment() {
 
             Firebase.firestore.collection("Order").document(orderId).update(order)
 
-            successDialog("已完成该订单。")
+            successDialog("Order Done")
             nav.navigateUp()
         }
 

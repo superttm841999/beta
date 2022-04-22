@@ -3,12 +3,12 @@
     <group android:id="@+id/shopFood" >
         <item
             android:id="@+id/profileFoodFragment"
-            android:title="我的我的" />
+            android:title="Seller Profile" />
         <item
             android:id="@+id/sellerFoodFragment"
-            android:title="食物" />
+            android:title="Food" />
         <item
             android:id="@+id/orderListFragment"
-            android:title="订单" />
+            android:title="Order" />
     </group>
 </menu>

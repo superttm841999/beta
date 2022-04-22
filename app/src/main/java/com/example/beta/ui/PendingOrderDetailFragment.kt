@@ -70,7 +70,7 @@ class PendingOrderDetailFragment : Fragment() {
 
             Firebase.firestore.collection("Order").document(orderId).update(order)
 
-            successDialog("已接受该订单。")
+            successDialog("Order accepted")
             nav.navigateUp()
         }
 
@@ -82,7 +82,7 @@ class PendingOrderDetailFragment : Fragment() {
 
             Firebase.firestore.collection("Order").document(orderId).update(order)
 
-            successDialog("已拒绝该订单。")
+            successDialog("Order rejected")
             nav.navigateUp()
         }
 

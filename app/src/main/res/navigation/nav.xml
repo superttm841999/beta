@@ -13,126 +13,126 @@
     <fragment
         android:id="@+id/sellerFormFragment"
         android:name="com.example.beta.ui.SellerFormFragment"
-        android:label="店家申请表格"
+        android:label="Seller Application Form"
         tools:layout="@layout/fragment_seller_form" />
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.beta.ui.AccountFragment"
-        android:label="我的"
+        android:label="My Account"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/shopFoodFragment"
         android:name="com.example.beta.ui.ShopFoodFragment"
-        android:label="店家"
+        android:label="Seller"
         tools:layout="@layout/fragment_shop_food" />
     <fragment
         android:id="@+id/cartListFragment"
         android:name="com.example.beta.ui.CartListFragment"
-        android:label="我的购物车"
+        android:label="My Cart"
         tools:layout="@layout/fragment_cart_list" />
     <fragment
         android:id="@+id/foodListFragment"
         android:name="com.example.beta.ui.FoodListFragment"
-        android:label="食物列表"
+        android:label="Food List"
         tools:layout="@layout/fragment_food_list" />
     <fragment
         android:id="@+id/foodDetailFragment"
         android:name="com.example.beta.ui.FoodDetailFragment"
-        android:label="食物详细资料"
+        android:label="Food Detail"
         tools:layout="@layout/fragment_food_detail" />
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.example.beta.ui.PaymentFragment"
-        android:label="付款"
+        android:label="Payment"
         tools:layout="@layout/fragment_payment" />
     <fragment
         android:id="@+id/sellerFoodFragment"
         android:name="com.example.beta.ui.SellerFoodFragment"
-        android:label="食物列表"
+        android:label="Food List"
         tools:layout="@layout/fragment_seller_food" />
     <fragment
         android:id="@+id/insertFoodFragment"
         android:name="com.example.beta.ui.InsertFoodFragment"
-        android:label="食物插入"
+        android:label="Insert Food"
         tools:layout="@layout/fragment_insert_food" />
     <fragment
         android:id="@+id/updateFoodFragment"
         android:name="com.example.beta.ui.UpdateFoodFragment"
-        android:label="食物更新"
+        android:label="Update Food"
         tools:layout="@layout/fragment_update_food" />
     <fragment
         android:id="@+id/orderHistoryListFragment"
         android:name="com.example.beta.ui.OrderHistoryListFragment"
-        android:label="我的订单"
+        android:label="Order History List"
         tools:layout="@layout/fragment_order_history_list" />
     <fragment
         android:id="@+id/orderHistoryDetailFragment"
         android:name="com.example.beta.ui.OrderHistoryDetailFragment"
-        android:label="订单详细资料"
+        android:label="Order Detail"
         tools:layout="@layout/fragment_order_history_detail" />
     <fragment
         android:id="@+id/sellerFragment"
         android:name="com.example.beta.ui.SellerFragment"
-        android:label="卖家首页"
+        android:label="Seller Home"
         tools:layout="@layout/fragment_seller" />
     <fragment
         android:id="@+id/orderListFragment"
         android:name="com.example.beta.ui.OrderListFragment"
-        android:label="订单主页"
+        android:label="Order Home"
         tools:layout="@layout/fragment_order_list" />
     <fragment
         android:id="@+id/inProgressOrderFragment"
         android:name="com.example.beta.ui.InProgressOrderFragment"
-        android:label="进行中"
+        android:label="In Progress"
         tools:layout="@layout/fragment_in_progress_order" />
     <fragment
         android:id="@+id/doneOrderFragment"
         android:name="com.example.beta.ui.DoneOrderFragment"
-        android:label="已完成"
+        android:label="Done"
         tools:layout="@layout/fragment_done_order" />
     <fragment
         android:id="@+id/pendingOrderFragment"
         android:name="com.example.beta.ui.PendingOrderFragment"
-        android:label="等待中"
+        android:label="Pending"
         tools:layout="@layout/fragment_pending_order" />
     <fragment
         android:id="@+id/pendingOrderDetailFragment"
         android:name="com.example.beta.ui.PendingOrderDetailFragment"
-        android:label="确认订单"
+        android:label="Order Detail"
         tools:layout="@layout/fragment_pending_order_detail" />
     <fragment
         android:id="@+id/inProgressOrderDetailFragment"
         android:name="com.example.beta.ui.InProgressOrderDetailFragment"
-        android:label="已接受的订单"
+        android:label="Order Detail"
         tools:layout="@layout/fragment_in_progress_order_detail" />
     <fragment
         android:id="@+id/doneOrderDetailFragment"
         android:name="com.example.beta.ui.DoneOrderDetailFragment"
-        android:label="详细资料"
+        android:label="Order Detail"
         tools:layout="@layout/fragment_done_order_detail" />
     <fragment
         android:id="@+id/accountProfileFragment"
         android:name="com.example.beta.ui.AccountProfileFragment"
-        android:label="fragment_account_profile"
+        android:label="Account Profile"
         tools:layout="@layout/fragment_account_profile" />
     <fragment
         android:id="@+id/accountChangePasswordFragment"
         android:name="com.example.beta.ui.AccountChangePasswordFragment"
-        android:label="fragment_account_change_password"
+        android:label="Change Password"
         tools:layout="@layout/fragment_account_change_password" />
     <fragment
         android:id="@+id/addressListFragment"
         android:name="com.example.beta.address.AddressListFragment"
-        android:label="fragment_address_list"
+        android:label="Address List"
         tools:layout="@layout/fragment_address_list" />
     <fragment
         android:id="@+id/addressAddFragment3"
         android:name="com.example.beta.address.AddressAddFragment"
-        android:label="AddressAddFragment" />
+        android:label="Add Address" />
     <fragment
         android:id="@+id/addressUpdateFragment2"
         android:name="com.example.beta.address.AddressUpdateFragment"
-        android:label="AddressUpdateFragment" />
+        android:label="Update Address" />
     <fragment
         android:id="@+id/profileFoodFragment"
         android:name="com.example.beta.ui.ProfileFoodFragment"

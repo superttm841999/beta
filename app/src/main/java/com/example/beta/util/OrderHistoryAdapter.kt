@@ -56,14 +56,14 @@ class OrderHistoryAdapter (
                         holder.imgLogo.setImageBitmap(l.logo.toBitmap())
                         holder.txtName.text  = l.name
                         when(order.status){
-                            0 -> holder.txtStatus.text  = "进行中"
-                            1 -> holder.txtStatus.text  = "已接受"
-                            2 -> holder.txtStatus.text = "已拒绝"
-                            else -> holder.txtStatus.text = "啥玩意"
+                            0 -> holder.txtStatus.text  = "Pending"
+                            1 -> holder.txtStatus.text  = "Accepted"
+                            2 -> holder.txtStatus.text = "Rejected"
+                            else -> holder.txtStatus.text = "What?!"
                         }
-                        holder.txtOrderId.text  = "产品ID # ${order.docId}"
+                        holder.txtOrderId.text  = "Order Id # ${order.docId}"
                         holder.txtTotal.text  = "RM ${formatter.format(order.payment)}"
-                        holder.txtCount.text = "- ${order.count} 产品"
+                        holder.txtCount.text = "- ${order.count} food(s)"
                         fn(holder, order)
                     }
 

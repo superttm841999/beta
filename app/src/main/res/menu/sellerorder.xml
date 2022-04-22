@@ -3,12 +3,12 @@
     <group android:id="@+id/shopFood" >
         <item
             android:id="@+id/pendingOrderFragment"
-            android:title="等待中" />
+            android:title="Pending" />
         <item
             android:id="@+id/inProgressOrderFragment"
-            android:title="进行中" />
+            android:title="In Progress" />
         <item
             android:id="@+id/doneOrderFragment"
-            android:title="已完成" />
+            android:title="Done" />
     </group>
 </menu>
