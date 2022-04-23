@@ -107,6 +107,10 @@ class AccountFragment : Fragment() {
             nav.navigate(R.id.voucherFragment)
         }
 
+        binding.btnAddCard.setOnClickListener {
+            nav.navigate(R.id.cardListFragment)
+        }
+
         return binding.root
     }
 }

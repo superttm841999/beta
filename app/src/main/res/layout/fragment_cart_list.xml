@@ -53,10 +53,10 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
+        app:layout_constraintTop_toBottomOf="@+id/spnAddress" />
 
     <TextView
         android:id="@+id/textView13"
@@ -87,16 +87,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnPay"
         app:layout_constraintEnd_toStartOf="@+id/btnPay"
         app:layout_constraintTop_toTopOf="@+id/btnPay" />
-
-    <Button
-        android:id="@+id/btnRefresh"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="4dp"
-        android:text="Refresh"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDeleteAll" />
 
     <View
         android:id="@+id/divider4"
@@ -143,9 +133,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnRefresh"
-        app:layout_constraintEnd_toStartOf="@+id/btnRefresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDeleteAll" />
 

@@ -21,6 +21,7 @@ data class Shop (
     @PrimaryKey
     var id   : String,
     var name : String,
+    var username : String = "",
 )
 
 
@@ -53,8 +54,8 @@ interface CartDao {
     @Query("DELETE FROM Cart WHERE shop_name = :shop_name AND username= :username")
     suspend fun deleteShop(shop_name :String, username : String)
 
-    @Query("DELETE FROM Cart")
-    suspend fun deleteAll()
+    @Query("DELETE FROM Cart WHERE username= :username")
+    suspend fun deleteAll(username: String)
 }
 
 @Dao
@@ -65,11 +66,11 @@ interface ShopDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(f:Shop) //Long -> row id
 
-    @Query("DELETE FROM Shop WHERE name = :shop_name")
-    suspend fun deleteShop(shop_name :String)
+    @Query("DELETE FROM Shop WHERE name = :shop_name AND username= :username")
+    suspend fun deleteShop(shop_name :String,username:String)
 
-    @Query("DELETE FROM Shop")
-    suspend fun deleteAll()
+    @Query("DELETE FROM Shop WHERE username= :username")
+    suspend fun deleteAll(username: String)
 }
 
 @Database(

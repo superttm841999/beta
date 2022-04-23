@@ -33,6 +33,7 @@ class PaymentFragment : Fragment() {
     private val voucherId by lazy { requireArguments().getString("voucherId") ?: ""}
     private val code by lazy { requireArguments().getString("code") ?: ""}
     private val address by lazy { requireArguments().getString("address") ?: ""}
+    private val method by lazy { requireArguments().getString("method") ?: ""}
     private val vm: CartViewModel by activityViewModels()
     private val voucherUsed: VoucherUsedViewModel by activityViewModels()
     private val formatter = DecimalFormat("0.00")
@@ -154,6 +155,7 @@ class PaymentFragment : Fragment() {
             voucherValue = voucher,
             address = address,
             progress = 10,
+            paymentMethod = method
         )
 
         runBlocking { addToOrderFood(count!!) }
@@ -165,7 +167,7 @@ class PaymentFragment : Fragment() {
 
         if(shop.isNotEmpty()){
             vm.deleteShop(shop,model.user.value!!.username)
-            vm.getShopDelete(shop)
+            vm.getShopDelete(shop,model.user.value!!.username)
 
         }
 

@@ -148,4 +148,24 @@
         android:name="com.example.beta.ui.ShopCartFragment"
         android:label="Shop Cart"
         tools:layout="@layout/fragment_shop_cart" />
+    <fragment
+        android:id="@+id/cardListFragment"
+        android:name="com.example.beta.ui.CardListFragment"
+        android:label="Card List"
+        tools:layout="@layout/fragment_card_list" />
+    <fragment
+        android:id="@+id/insertCardFragment"
+        android:name="com.example.beta.ui.InsertCardFragment"
+        android:label="Insert Card"
+        tools:layout="@layout/fragment_insert_card" />
+    <fragment
+        android:id="@+id/cardDetailFragment"
+        android:name="com.example.beta.ui.CardDetailFragment"
+        android:label="Card Detail"
+        tools:layout="@layout/fragment_card_detail" />
+    <fragment
+        android:id="@+id/paymentMethodFragment"
+        android:name="com.example.beta.ui.PaymentMethodFragment"
+        android:label="Payment Method"
+        tools:layout="@layout/fragment_payment_method" />
 </navigation>

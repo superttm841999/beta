@@ -71,7 +71,8 @@ class FoodDetailFragment : Fragment() {
 
         val s = Shop(
             id = shopId,
-            name = shop
+            name = shop,
+            username = model.user.value!!.username
         )
 
         val err = cvm.validate(c)

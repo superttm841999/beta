@@ -104,9 +104,6 @@ class CartListFragment : Fragment() {
         }
 
         binding.rv.adapter = adapter
-        binding.btnRefresh.setOnClickListener {
-            nav.navigate(R.id.cartListFragment)
-        }
 
             vm.getShop(shop_name,model.user.value!!.username).observe(viewLifecycleOwner){carts ->
                 adapter.submitList(carts)
@@ -118,8 +115,8 @@ class CartListFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             nav.navigate(R.id.shopFoodFragment)
         }
-        binding.btnDeleteAll.setOnClickListener { vm.deleteAll()
-        vm.deleteShopAll()
+        binding.btnDeleteAll.setOnClickListener { vm.deleteAll(model.user.value!!.username)
+        vm.deleteShopAll(model.user.value!!.username)
         }
 
 
@@ -149,7 +146,7 @@ class CartListFragment : Fragment() {
                             for(c in carts){
                                 total += (c.price * c.count)
                             }
-                            nav.navigate(R.id.paymentFragment,
+                            nav.navigate(R.id.paymentMethodFragment,
                                 bundleOf("id" to total,
                                     "shop" to shop_name,
                                     "voucher" to 0,
@@ -195,7 +192,7 @@ class CartListFragment : Fragment() {
                                         for(c in carts){
                                             total += (c.price * c.count)
                                         }
-                                        nav.navigate(R.id.paymentFragment,
+                                        nav.navigate(R.id.paymentMethodFragment,
                                             bundleOf("id" to total,
                                                 "shop" to shop_name,
                                                 "voucher" to vvv?.value,

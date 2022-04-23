@@ -56,6 +56,7 @@ class OrderHistoryDetailFragment : Fragment() {
                         binding.txtVoucher.text = "RM ${formatter.format(l.voucherValue)}"
                         binding.txtVoucherName.text = "(" + l.voucherName + ")"
                         binding.txtTotal.text = "RM ${formatter.format(l.payment)}"
+                        binding.txtPaymentMethod.text = "${l.paymentMethod}"
                     }
                 }
             }

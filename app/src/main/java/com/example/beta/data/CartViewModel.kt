@@ -26,16 +26,16 @@ class CartViewModel : ViewModel() {
 
     fun deleteShop(shop_name : String, username : String) = viewModelScope.launch { db.cartDao.deleteShop(shop_name,username)}
 
-    fun deleteAll() = viewModelScope.launch { db.cartDao.deleteAll() }
+    fun deleteAll(username:String) = viewModelScope.launch { db.cartDao.deleteAll(username) }
 
 
     fun getShopAll() =  db.shopDao.getAll()
 
     fun insertShop(f: Shop) = viewModelScope.launch { db.shopDao.insert(f) }
 
-    fun getShopDelete(shop_name: String) = viewModelScope.launch { db.shopDao.deleteShop(shop_name) }
+    fun getShopDelete(shop_name: String, username:String) = viewModelScope.launch { db.shopDao.deleteShop(shop_name,username) }
 
-    fun deleteShopAll() = viewModelScope.launch { db.shopDao.deleteAll() }
+    fun deleteShopAll(username: String) = viewModelScope.launch { db.shopDao.deleteAll(username) }
 
     fun validate(f: Cart): String {
         var err = ""

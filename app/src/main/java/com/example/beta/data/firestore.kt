@@ -60,6 +60,18 @@ data class Food(
     var application: Seller = Seller()
 }
 
+data class Card(
+    @DocumentId
+    var docId : String = "",
+    var name : String = "",
+    var date : String =  "",
+    var cardNo : String = "",
+    var cvv : String = "",
+    var address : String = "",
+    var type: String="",
+    var userId: String = "",
+)
+
 data class Voucher(
     @DocumentId
     var docId : String = "",
@@ -111,7 +123,8 @@ data class Order(
     var voucherValue : Int = 0,
     //In Progress-0  Done -2
     var progress : Int = 0,
-    var address: String = ""
+    var address: String = "",
+    var paymentMethod:String = ""
 ){
     @get:Exclude
     var count: Int = 0
@@ -122,3 +135,4 @@ val APPLICATION_FORM = Firebase.firestore.collection("Seller")
 val FOODS = Firebase.firestore.collection("Food")
 val ORDERS = Firebase.firestore.collection("Order")
 val ORDER_DETAIL = Firebase.firestore.collection("OrderFood")
+val CARD = Firebase.firestore.collection("Card")
