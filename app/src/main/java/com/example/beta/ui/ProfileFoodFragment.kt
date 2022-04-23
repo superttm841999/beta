@@ -144,7 +144,8 @@ class ProfileFoodFragment : Fragment() {
             logo = binding.imgPhoto.cropToBlob(300,300),
             category = binding.spnCat.selectedItem.toString(),
             address = binding.edtAddress.text.toString().trim(),
-
+            open = binding.edtOpen.text.toString().trim(),
+            close = binding.edtClose.text.toString().trim(),
             )
 
         var shop = mutableMapOf<String, Any>(
