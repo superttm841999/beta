@@ -63,16 +63,6 @@ class InProgressOrderDetailFragment : Fragment() {
 
         }
 
-        binding.btnDone.setOnClickListener {
-            var order = mutableMapOf<String, Any>(
-                "progress" to 2,
-            )
-
-            Firebase.firestore.collection("Order").document(orderId).update(order)
-
-            successDialog("Order Done")
-            nav.navigateUp()
-        }
 
         return binding.root
     }

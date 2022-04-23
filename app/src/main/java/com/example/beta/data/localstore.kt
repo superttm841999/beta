@@ -60,8 +60,8 @@ interface CartDao {
 
 @Dao
 interface ShopDao {
-    @Query("SELECT * FROM Shop")
-    fun getAll(): LiveData<List<Shop>>
+    @Query("SELECT * FROM Shop WHERE username = :username")
+    fun getAll(username: String): LiveData<List<Shop>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(f:Shop) //Long -> row id

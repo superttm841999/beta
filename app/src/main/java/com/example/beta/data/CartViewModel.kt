@@ -29,7 +29,7 @@ class CartViewModel : ViewModel() {
     fun deleteAll(username:String) = viewModelScope.launch { db.cartDao.deleteAll(username) }
 
 
-    fun getShopAll() =  db.shopDao.getAll()
+    fun getShopAll(username: String) =  db.shopDao.getAll(username)
 
     fun insertShop(f: Shop) = viewModelScope.launch { db.shopDao.insert(f) }
 

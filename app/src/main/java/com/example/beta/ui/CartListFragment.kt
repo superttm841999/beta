@@ -93,6 +93,13 @@ class CartListFragment : Fragment() {
 
         }
 
+            voucherUsed.checkVoucherUsed("",model.user.value!!.username)
+            voucherUsed.voucherList1.observe(viewLifecycleOwner){
+
+            }
+
+
+
 
         val adapter = CartAdapter() { holder, f ->
             // holder.root.setOnClickListener      { nav.navigate(R.id.detailFragment, bundleOf("id" to f.id)) }
@@ -176,32 +183,33 @@ class CartListFragment : Fragment() {
                             if(err == true && vvv.status == 1 ){
                                 if (cmp != null && cmpEnd !=null) {
                                     if(cmp >= 0 && cmpEnd <= 0){
-                                        voucherUsed.voucherList.observe(viewLifecycleOwner){ list ->
-                                            list.forEach { f->
-                                                if(f.voucherId == getId && f.username == model.user.value!!.username){
+                                        voucherUsed.checkVoucherUsed(getId!!,model.user.value!!.username)
+                                        voucherUsed.voucherList1.observe(viewLifecycleOwner){ list ->
+                                                if(list.isNotEmpty()){
                                                     AlertDialog.Builder(context)
                                                         .setIcon(R.drawable.ic_error)
                                                         .setTitle("Error")
                                                         .setMessage("You have used this code already")
-                                                        .setPositiveButton("Dismiss", null)
+                                                        .setPositiveButton("Back", null)
                                                         .show()
-                                                    nav.navigateUp()
+                                                    return@observe
+                                                }else{
+                                                    for(c in carts){
+                                                        total += (c.price * c.count)
+                                                    }
+                                                    nav.navigate(R.id.paymentMethodFragment,
+                                                        bundleOf("id" to total,
+                                                            "shop" to shop_name,
+                                                            "voucher" to vvv?.value,
+                                                            "voucher name" to vvv?.name,
+                                                            "voucherId" to vvv?.docId,
+                                                            "code" to vvv?.code,
+                                                            "address" to binding.spnAddress.selectedItem.toString()
+                                                        )
+                                                    )
                                                 }
-                                            }
+
                                         }
-                                        for(c in carts){
-                                            total += (c.price * c.count)
-                                        }
-                                        nav.navigate(R.id.paymentMethodFragment,
-                                            bundleOf("id" to total,
-                                                "shop" to shop_name,
-                                                "voucher" to vvv?.value,
-                                                "voucher name" to vvv?.name,
-                                                "voucherId" to vvv?.docId,
-                                                "code" to vvv?.code,
-                                                "address" to binding.spnAddress.selectedItem.toString()
-                                            )
-                                        )
                                     }else{
                                         AlertDialog.Builder(context)
                                             .setIcon(R.drawable.ic_error)

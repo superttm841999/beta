@@ -39,7 +39,7 @@ class DoneOrderFragment : Fragment() {
 
         vm.setSellerIdWithoutStatus(id,2)
 
-        vm.orderList.observe(viewLifecycleOwner){ list ->
+        vm.orderList1.observe(viewLifecycleOwner){ list ->
 
             adapter.submitList(list)
             binding.txtCount.text = "${list.size} record(s)"

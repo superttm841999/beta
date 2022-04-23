@@ -12,6 +12,7 @@ import com.example.beta.R
 import com.example.beta.data.CartViewModel
 import com.example.beta.data.SellerListAdminViewModel
 import com.example.beta.databinding.FragmentShopCartBinding
+import com.example.beta.login.LoginViewModel
 import com.example.beta.util.CartAdapter
 import com.example.beta.util.ShopCartAdapter
 
@@ -21,6 +22,7 @@ class ShopCartFragment : Fragment() {
     private lateinit var binding: FragmentShopCartBinding
     private val nav by lazy { findNavController() }
     private val vm: CartViewModel by activityViewModels()
+    private val model: LoginViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -33,7 +35,7 @@ class ShopCartFragment : Fragment() {
         }
 
         binding.rv.adapter = adapter
-        vm.getShopAll().observe(viewLifecycleOwner){carts ->
+        vm.getShopAll(model.user.value!!.username).observe(viewLifecycleOwner){carts ->
             adapter.submitList(carts)
         }
 

@@ -15,6 +15,9 @@ import kotlinx.coroutines.tasks.await
 
 class VoucherUsedViewModel : ViewModel() {
 
+    private var voucherId = ""
+    private var username = ""
+
     private val col = Firebase.firestore.collection("VoucherUsed")
     private val countCol = Firebase.firestore.collection("Count")
     private val cat = listOf<VoucherUsed>()
@@ -24,14 +27,23 @@ class VoucherUsedViewModel : ViewModel() {
     private var voucherL = listOf<VoucherUsed>()
     var voucherList = MutableLiveData<List<VoucherUsed>>()
 
+    private var voucherL1 = listOf<VoucherUsed>()
+    var voucherList1 = MutableLiveData<List<VoucherUsed>>()
+
+    init {
+
+        viewModelScope.launch {
+            col.addSnapshotListener { snap, _ -> voucherList1.value = snap?.toObjects()
+                voucherL1 = snap!!.toObjects()
+            }
+        }
+    }
+
     init {
 
         viewModelScope.launch {
             col.addSnapshotListener { snap, _ -> voucherList.value = snap?.toObjects()
                 voucherL = snap!!.toObjects()
-                runBlocking {
-                    //updateResult()
-                }
             }
         }
     }
@@ -52,6 +64,20 @@ class VoucherUsedViewModel : ViewModel() {
             countCol.get().await().toObjects<Count>()
         }
     }
+
+    fun checkVoucherUsed(voucherId:String,username:String){
+        this.voucherId = voucherId
+        this.username = username
+        runBlocking { updateResult() }
+    }
+
+    private suspend fun updateResult(){
+        var list = voucherL1.filter {
+            it.voucherId == this.voucherId}.filter{ it.username == this.username }
+
+        voucherList1.value = list
+    }
+
 
      fun get(docId: String): VoucherUsed? {
         return vouchers.value?.find{ f -> f.voucherId == docId }

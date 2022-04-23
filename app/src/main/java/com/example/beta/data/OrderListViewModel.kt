@@ -26,6 +26,9 @@ class OrderListViewModel: ViewModel() {
     private var orderUserL = listOf<Order>()
     var orderUserList = MutableLiveData<List<Order>>()
 
+    private var orderL1 = listOf<Order>()
+    var orderList1 = MutableLiveData<List<Order>>()
+
     init {
         col.addSnapshotListener { snap, _ -> orderDetail.value = snap?.toObjects() }
     }
@@ -48,6 +51,18 @@ class OrderListViewModel: ViewModel() {
             orderL = snap!!.toObjects()
                 runBlocking {
                     updateResult()
+                }
+
+            }
+        }
+    }
+
+    init {
+
+        viewModelScope.launch {
+            ORDERS.addSnapshotListener { snap, _ -> orderList1.value = snap?.toObjects()
+                orderL1 = snap!!.toObjects()
+                runBlocking {
                     updateResultWithoutStatus()
                 }
 
@@ -91,7 +106,7 @@ class OrderListViewModel: ViewModel() {
     }
 
     suspend fun updateResultWithoutStatus(){
-        var list = orderL.filter {
+        var list = orderL1.filter {
             it.sellerId == this.sellerId && (it.progress == this.progress || it.progress == 3)
         }
 
@@ -104,7 +119,7 @@ class OrderListViewModel: ViewModel() {
         if(reverse)
             list = list.reversed()
 
-        orderList.value = list
+        orderList1.value = list
     }
 
     suspend fun updateResult(){
