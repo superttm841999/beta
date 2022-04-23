@@ -59,7 +59,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="食物小计"
+        android:text="Subtotal"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/txtSubtotal"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -89,7 +89,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="送餐费"
+        android:text="Delivery Fee"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/txtDeliveryFee"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -114,7 +114,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="税(%)"
+        android:text="Tax(%)"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/txtTax"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -138,7 +138,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="优惠劵"
+        android:text="Voucher"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/txtVoucher"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -186,7 +186,7 @@
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="总计"
+        android:text="Total"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/txtTotal"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -214,7 +214,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="拒绝"
+        android:text="Reject"
         app:layout_constraintBottom_toBottomOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="@+id/divider"
         app:layout_constraintTop_toTopOf="parent" />
@@ -224,7 +224,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="接受"
+        android:text="Accept"
         app:layout_constraintBottom_toBottomOf="@+id/divider"
         app:layout_constraintEnd_toStartOf="@+id/btnReject"
         app:layout_constraintTop_toTopOf="parent" />
